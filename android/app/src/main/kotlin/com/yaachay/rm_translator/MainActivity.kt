@@ -1,4 +1,4 @@
-package com.example.rakhine_myanmar_translator
+package com.yaachay.rm_translator
 
 import io.flutter.embedding.android.FlutterActivity
 

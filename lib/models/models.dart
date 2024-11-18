@@ -1,0 +1,1 @@
+export 'knowledge-model.dart';
