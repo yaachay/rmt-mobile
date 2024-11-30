@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
           const SizedBox(
             height: 100,
-            child: Center(child: TextLogo(logoSize: 22)),
+            child: Center(child: TextLogo(logoSize: 25)),
           ),
           SizedBox(
             height: 100,

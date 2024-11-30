@@ -29,7 +29,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           'Settings',
           style: TextStyle(color: Palette.text, fontSize: 20),
         ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Palette.scaffold,
       ),
       body: const Center(
         child: Text(

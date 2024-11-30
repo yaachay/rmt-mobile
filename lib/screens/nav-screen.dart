@@ -110,9 +110,17 @@ class _NavScreenState extends State<NavScreen> {
                 child: CustomButton(
                     icon: Icons.feedback,
                     text: 'Feedback',
+                    borderRadius: 20,
                     onTap: () {
-                      _zoomDrawerController!.close;
-                      Wiredash.of(context).show();
+                      Wiredash.of(context).show(
+                        options: WiredashFeedbackOptions(
+                          labels: [
+                            Label(id: Data.label1[0], title: Data.label1[1]),
+                            Label(id: Data.label2[0], title: Data.label2[1]),
+                            Label(id: Data.label3[0], title: Data.label3[1]),
+                          ],
+                        ),
+                      );
                     }),
               ),
             )

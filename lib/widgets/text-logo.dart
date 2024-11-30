@@ -23,15 +23,16 @@ class TextLogo extends StatelessWidget {
     return RichText(
       text: TextSpan(
         style: TextStyle(
+          fontFamily: 'Inder',
           fontSize: logoSize,
-          fontWeight: boldAll! ? FontWeight.w500 : null,
+          fontWeight: boldAll! ? FontWeight.w700 : null,
         ),
         children: <TextSpan>[
           TextSpan(
             text: 'RM',
             style: TextStyle(
               color: Palette.primary,
-              fontWeight: boldRM! ? FontWeight.w500 : null,
+              fontWeight: boldRM! ? FontWeight.w700 : null,
             ),
           ),
           TextSpan(

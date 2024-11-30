@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
     return Wiredash(
       projectId: Data.wiredashProjectID,
       secret: Data.wiredashSecret,
+      theme: WiredashThemeData(primaryColor: Palette.primary),
       child: MaterialApp(
         title: 'RM Translator',
         theme: ThemeData(
