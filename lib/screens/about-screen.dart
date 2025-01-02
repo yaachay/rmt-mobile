@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 import 'package:rakhine_myanmar_translator/widgets/widgets.dart';
@@ -17,7 +18,6 @@ class _AboutScreenState extends State<AboutScreen> {
     {'name': 'Khin Hnin Wai', 'task': 'Data'},
     {'name': 'Nu Thandar Htun', 'task': 'Data'},
     {'name': 'Phyoe Thiri Aung', 'task': 'Data'},
-    // {'name': '', 'task': ''},
   ];
   final List<String> purposes = [
     'Hello world1 Hello world1 Hello world1 Hello world1 Hello world1 Hello world1 Hello world1',
@@ -34,9 +34,11 @@ class _AboutScreenState extends State<AboutScreen> {
           onPressed: () {
             ZoomDrawer.of(context)!.toggle();
           },
-          icon: const Icon(
-            Icons.menu,
-            color: Palette.icon,
+          icon: SvgPicture.asset(
+            width: 30,
+            height: 30,
+            'assets/svgs/menu.svg',
+            color: Palette.text,
           ),
         ),
         title: const Text(
@@ -45,6 +47,7 @@ class _AboutScreenState extends State<AboutScreen> {
         ),
         backgroundColor: Palette.scaffold,
         elevation: 0,
+        surfaceTintColor: Colors.transparent,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -54,11 +57,11 @@ class _AboutScreenState extends State<AboutScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 110,
+                  height: 120,
                   width: double.infinity,
                 ),
                 IconLogo(
-                  iconSize: 32,
+                  iconSize: 35,
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 20.0),
@@ -68,12 +71,16 @@ class _AboutScreenState extends State<AboutScreen> {
                     children: [
                       TextLogo(logoSize: 20),
                       Text(
-                        Data.packageName,
-                        style: TextStyle(color: Palette.hintText, fontSize: 14),
+                        DotEnv.packageName,
+                        style: TextStyle(
+                          color: Palette.hintText,
+                        ),
                       ),
                       Text(
-                        "version: ${Data.versionNum}",
-                        style: TextStyle(color: Palette.hintText, fontSize: 14),
+                        "version: ${DotEnv.versionNum}",
+                        style: TextStyle(
+                          color: Palette.hintText,
+                        ),
                       ),
                     ],
                   ),
@@ -81,7 +88,7 @@ class _AboutScreenState extends State<AboutScreen> {
               ],
             ),
             const SizedBox(
-              height: 20,
+              height: 30,
               width: double.infinity,
             ),
             Padding(
@@ -140,12 +147,63 @@ class _AboutScreenState extends State<AboutScreen> {
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Row(
-                children: [],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30),
+              child: Column(
+                children: [
+                  const Text(
+                    'Contact me on:',
+                    style: TextStyle(
+                      color: Palette.text,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const SizedBox(
+                        width: 30,
+                        height: 30,
+                      ),
+                      CustomCircleButton(
+                          svgPath: 'assets/svgs/gmail.svg',
+                          padding: 7,
+                          onTap: () {
+                            debugPrint('Mail');
+                          }),
+                      CustomCircleButton(
+                          svgPath: 'assets/svgs/linkedin.svg',
+                          onTap: () {
+                            debugPrint('LinkedIn');
+                          }),
+                      CustomCircleButton(
+                          svgPath: 'assets/svgs/facebook.svg',
+                          onTap: () {
+                            debugPrint('Facebook');
+                          }),
+                      CustomCircleButton(
+                          svgPath: 'assets/svgs/telegram.svg',
+                          onTap: () {
+                            debugPrint('Telegram');
+                          }),
+                      CustomCircleButton(
+                          svgPath: 'assets/svgs/viber.svg',
+                          padding: 7,
+                          onTap: () {
+                            debugPrint('Viber');
+                          }),
+                      const SizedBox(
+                        width: 30,
+                        height: 30,
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            )
+            ),
           ],
         ),
       ),

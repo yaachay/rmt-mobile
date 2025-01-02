@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 
 class CustomDrawerItem extends StatelessWidget {
   ///
-  final IconData icon;
+  final IconData? icon;
 
   /// The size of the icon.
   final double? iconSize;
+
+  ///
+  final String? svgPath;
+
+  /// The size of the icon.
+  final double? svgSize;
 
   /// The title of `CustomDrawerItem`.
   final String text;
@@ -23,8 +30,10 @@ class CustomDrawerItem extends StatelessWidget {
 
   const CustomDrawerItem(
       {super.key,
-      required this.icon,
+      this.icon,
       this.iconSize,
+      this.svgPath,
+      this.svgSize,
       required this.text,
       this.textSize,
       this.isActive = false,
@@ -36,11 +45,18 @@ class CustomDrawerItem extends StatelessWidget {
       onTap: onTap,
       mouseCursor: MouseCursor.uncontrolled,
       child: ListTile(
-        leading: Icon(
-          icon,
-          size: iconSize,
-          color: isActive ? Palette.primary : Palette.icon,
-        ),
+        leading: (icon != null)
+            ? Icon(
+                icon,
+                size: iconSize,
+                color: isActive ? Palette.primary : Palette.icon,
+              )
+            : SvgPicture.asset(
+                svgPath!,
+                width: svgSize,
+                height: svgSize,
+                color: isActive ? Palette.primary : Palette.icon,
+              ),
         title: Text(
           text,
           style: TextStyle(

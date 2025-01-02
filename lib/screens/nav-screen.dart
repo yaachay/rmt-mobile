@@ -25,22 +25,37 @@ class _NavScreenState extends State<NavScreen> {
     AboutScreen()
   ];
 
-  final List<IconData> _icons = [
-    MdiIcons.homeVariant,
-    MdiIcons.crosshairsGps,
-    MdiIcons.heart,
-    MdiIcons.cog,
-    MdiIcons.share,
-    MdiIcons.information
-  ];
-
-  final List<String> _menus = [
-    'Home',
-    'AI Generator',
-    'Favorites',
-    'Settings',
-    'Share App',
-    'About'
+  final List<Map<String, dynamic>> _menus = [
+    {
+      'label': 'Home',
+      'svgFill': 'assets/svgs/home-fill.svg',
+      'svgOutline': 'assets/svgs/home-outline.svg',
+    },
+    {
+      'label': 'AI Generator',
+      'svgFill': 'assets/svgs/chat-gpt.svg',
+      'svgOutline': 'assets/svgs/chat-gpt.svg',
+    },
+    {
+      'label': 'Favourites',
+      'svgFill': 'assets/svgs/heart-fill.svg',
+      'svgOutline': 'assets/svgs/heart-outline.svg',
+    },
+    {
+      'label': 'Settings',
+      'svgFill': 'assets/svgs/setting-fill.svg',
+      'svgOutline': 'assets/svgs/setting-outline.svg',
+    },
+    {
+      'label': 'Share App',
+      'svgFill': 'assets/svgs/share-fill.svg',
+      'svgOutline': 'assets/svgs/share-outline.svg',
+    },
+    {
+      'label': 'About',
+      'svgFill': 'assets/svgs/info-fill.svg',
+      'svgOutline': 'assets/svgs/info-outline.svg',
+    },
   ];
 
   @override
@@ -73,9 +88,10 @@ class _NavScreenState extends State<NavScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextLogo(logoSize: 18),
-                          Text("version: ${Data.versionNum}",
+                          Text("version: ${DotEnv.versionNum}",
                               style: TextStyle(
-                                  color: Palette.hintText, fontSize: 12))
+                                color: Palette.hintText,
+                              ))
                         ],
                       ),
                     )
@@ -87,11 +103,14 @@ class _NavScreenState extends State<NavScreen> {
               flex: 4,
               child: Center(
                 child: ListView.builder(
-                    itemCount: _icons.length,
+                    itemCount: _menus.length,
                     itemBuilder: (context, index) {
+                      final menu = _menus[index];
                       return CustomDrawerItem(
-                        icon: _icons[index],
-                        text: _menus[index],
+                        svgPath: index == _selectedIndex
+                            ? menu['svgFill']
+                            : menu['svgOutline'],
+                        text: menu['label'],
                         isActive: index == _selectedIndex ? true : false,
                         onTap: () {
                           ZoomDrawer.of(context)!.toggle();
@@ -108,16 +127,19 @@ class _NavScreenState extends State<NavScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: CustomButton(
-                    icon: Icons.feedback,
+                    svgPath: 'assets/svgs/feedback.svg',
+                    svgSize: 35,
+                    color: Palette.text,
                     text: 'Feedback',
+                    padding: 5,
                     borderRadius: 20,
                     onTap: () {
                       Wiredash.of(context).show(
                         options: WiredashFeedbackOptions(
                           labels: [
-                            Label(id: Data.label1[0], title: Data.label1[1]),
-                            Label(id: Data.label2[0], title: Data.label2[1]),
-                            Label(id: Data.label3[0], title: Data.label3[1]),
+                            ...DotEnv.wiredashLabels.map(
+                              (e) => Label(id: e['id']!, title: e['label']!),
+                            ),
                           ],
                         ),
                       );

@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
           const SizedBox(
             height: 100,
-            child: Center(child: TextLogo(logoSize: 25)),
+            child: Center(child: TextLogo(logoSize: 28)),
           ),
           SizedBox(
             height: 100,
@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
                 const Text(
                   'version: 1.0.0',
-                  style: TextStyle(fontSize: 12, color: Palette.hintText),
+                  style: TextStyle(color: Palette.hintText),
                 ),
               ],
             )),

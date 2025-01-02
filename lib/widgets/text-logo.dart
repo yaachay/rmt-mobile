@@ -2,21 +2,41 @@ import 'package:flutter/material.dart';
 
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 
-class TextLogo extends StatelessWidget {
-  /// The font size of Text Logo
-  final double logoSize;
-  final bool? boldRM;
+class TextLogo extends StatefulWidget {
+  final String? text;
+  final int? coloredIndex;
+  final double? logoSize;
+  final bool? boldColoredText;
   final bool? boldAll;
-
-  /// The color of `Translator` text.
   final Color? textColor;
 
   const TextLogo(
       {super.key,
-      required this.logoSize,
-      this.boldRM = true,
+      this.text,
+      this.coloredIndex = 2,
+      this.logoSize = 20,
+      this.boldColoredText = true,
       this.boldAll = false,
       this.textColor = Palette.text});
+
+  @override
+  State<TextLogo> createState() => _TextLogoState();
+}
+
+class _TextLogoState extends State<TextLogo> {
+  late String coloredText = '';
+  late String remainText = '';
+
+  @override
+  void initState() {
+    super.initState();
+    coloredText = ((widget.text == null)
+        ? 'RM'
+        : widget.text?.substring(0, widget.coloredIndex))!;
+    remainText = ((widget.text == null)
+        ? 'Translator'
+        : widget.text?.substring(2, widget.text?.length))!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,21 +44,21 @@ class TextLogo extends StatelessWidget {
       text: TextSpan(
         style: TextStyle(
           fontFamily: 'Inder',
-          fontSize: logoSize,
-          fontWeight: boldAll! ? FontWeight.w700 : null,
+          fontSize: widget.logoSize,
+          fontWeight: widget.boldAll! ? FontWeight.w700 : null,
         ),
         children: <TextSpan>[
           TextSpan(
-            text: 'RM',
+            text: coloredText,
             style: TextStyle(
               color: Palette.primary,
-              fontWeight: boldRM! ? FontWeight.w700 : null,
+              fontWeight: widget.boldColoredText! ? FontWeight.w700 : null,
             ),
           ),
           TextSpan(
-            text: 'Translator',
+            text: remainText,
             style: TextStyle(
-              color: textColor,
+              color: widget.textColor,
             ),
           ),
         ],

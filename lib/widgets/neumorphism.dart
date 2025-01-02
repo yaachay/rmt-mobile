@@ -8,6 +8,9 @@ class Neumorphism extends StatelessWidget {
   /// The background color of `Neumorphism` Widget.
   final Color? backgroundColor;
 
+  /// The background color of `Neumorphism` Widget.
+  final LinearGradient? gradient;
+
   /// The width of `Neumorphism` Widget.
   final double? width;
 
@@ -26,6 +29,7 @@ class Neumorphism extends StatelessWidget {
   const Neumorphism({
     super.key,
     this.backgroundColor = Palette.scaffold,
+    this.gradient,
     this.width,
     this.height,
     this.offset = 4.0,
@@ -41,6 +45,7 @@ class Neumorphism extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         color: backgroundColor,
+        gradient: gradient,
         borderRadius: borderRadius,
         boxShadow: [
           BoxShadow(

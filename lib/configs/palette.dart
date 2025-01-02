@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Palette {
-  static const bool lightTheme = false;
+  static const bool lightTheme = true;
 
   static const Color primary = Color(0xFF308AF4);
   static const Color scaffold =
       lightTheme ? Color(0xFFD9D9D9) : Color(0xFF1E1E1E);
   static const Color scaffoldSecondary =
-      lightTheme ? Color(0xFFF5F7FB) : Color(0xFF333333);
+      lightTheme ? Color(0x60FFFFFF) : Color(0xFF333333);
   static const scaffoldShadow =
       lightTheme ? Color(0x10000000) : Color(0x10FFFFFF);
 
@@ -35,6 +35,11 @@ class Palette {
       lightTheme ? Color(0xFFFFFFFF) : Color(0x25FFFFFF);
   static const Color bottomBoxShadow =
       lightTheme ? Color(0x25000000) : Color(0xFF000000);
+
+  static const Color shimmerBase =
+      lightTheme ? Color(0x30000000) : Color(0xFFFFFFFF);
+  static const Color shimmerHighlight =
+      lightTheme ? Color(0xFF5A5A5A) : Color(0xFFDFDFDF);
   // static const Color buttonText = Color(0xFFEFEFEF);
 }
 

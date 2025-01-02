@@ -13,15 +13,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wiredash(
-      projectId: Data.wiredashProjectID,
-      secret: Data.wiredashSecret,
+      projectId: DotEnv.wiredashProjectID,
+      secret: DotEnv.wiredashSecret,
       theme: WiredashThemeData(primaryColor: Palette.primary),
       child: MaterialApp(
         title: 'RM Translator',
         theme: ThemeData(
-          useMaterial3: true,
-          fontFamily: 'Inder',
-        ),
+            useMaterial3: true,
+            fontFamily: 'Inder',
+            primaryColor: Palette.primary,
+            appBarTheme: const AppBarTheme(backgroundColor: Palette.scaffold),
+            scaffoldBackgroundColor: Palette.scaffold,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Palette.primary,
+              secondary: Palette.primary,
+            )),
         initialRoute: '/',
         routes: {
           '/': (context) => const SplashScreen(),
@@ -29,8 +35,8 @@ class MyApp extends StatelessWidget {
           '/home': (context) => const HomeScreen(),
           '/ai-generator': (context) => const AiGeneratorScreen(),
           '/favorite': (context) => const FavoritesScreen(),
-          '/share-app': (context) => const ShareAppScreen(),
           '/settings': (context) => const SettingsScreen(),
+          '/share-app': (context) => const ShareAppScreen(),
           '/about': (context) => const AboutScreen(),
         },
         debugShowCheckedModeBanner: false,

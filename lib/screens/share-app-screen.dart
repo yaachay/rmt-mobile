@@ -1,11 +1,23 @@
+// ignore_for_file: non_const_call_to_literal_constructor
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 import 'package:rakhine_myanmar_translator/widgets/widgets.dart';
+import 'package:share_plus/share_plus.dart';
 
-class ShareAppScreen extends StatelessWidget {
+class ShareAppScreen extends StatefulWidget {
   const ShareAppScreen({super.key});
 
+  @override
+  State<ShareAppScreen> createState() => _ShareAppScreenState();
+}
+
+class _ShareAppScreenState extends State<ShareAppScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,9 +27,11 @@ class ShareAppScreen extends StatelessWidget {
           onPressed: () {
             ZoomDrawer.of(context)!.toggle();
           },
-          icon: const Icon(
-            Icons.menu,
-            color: Palette.icon,
+          icon: SvgPicture.asset(
+            width: 30,
+            height: 30,
+            'assets/svgs/menu.svg',
+            color: Palette.text,
           ),
         ),
         title: const Text(
@@ -25,11 +39,116 @@ class ShareAppScreen extends StatelessWidget {
           style: TextStyle(color: Palette.text, fontSize: 20),
         ),
         backgroundColor: Palette.scaffold,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
       ),
-      body: const Center(
-        child: Text(
-          'Share App',
-          style: TextStyle(color: Palette.text),
+      body: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              'Scan for ${Platform.operatingSystem} app',
+              style: const TextStyle(color: Palette.text, fontSize: 20),
+            ),
+            Neumorphism(
+              // offset: 5,
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              child: Container(
+                width: 200,
+                height: 200,
+                padding: const EdgeInsets.all(10),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                child: Center(
+                  child: PrettyQrView.data(
+                    errorCorrectLevel: QrErrorCorrectLevel.H,
+                    data:
+                        'https://raw.githubusercontent.com/yaachay/ucspkingqueenselection/main/ucsp-voting.apk',
+                    decoration: PrettyQrDecoration(
+                      shape: PrettyQrRoundedSymbol(color: Colors.black87),
+                      image: PrettyQrDecorationImage(
+                        image: const AssetImage('assets/images/image.png'),
+                        padding: const EdgeInsets.all(10),
+                        scale: .3,
+                        opacity: 0.8,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 250,
+              child: CustomButton(
+                svgPath: 'assets/svgs/play-store.svg',
+                text: 'Find more apps',
+                onTap: () {},
+              ),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Share app for:',
+                  style: TextStyle(
+                    color: Palette.text,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const SizedBox(
+                      width: 30,
+                      height: 30,
+                    ),
+                    CustomCircleButton(
+                        svgPath: 'assets/svgs/android.svg',
+                        onTap: () {
+                          Share.share(
+                              'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for Android.\nhttps://github.com/yaachay/rmt-android');
+                        }),
+                    CustomCircleButton(
+                        svgPath: 'assets/svgs/ios.svg',
+                        onTap: () {
+                          Share.share(
+                              'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for iOS.\nhttps://github.com/yaachay/rmt-ios');
+                        }),
+                    // CustomCircleButton(
+                    //     svgPath: 'assets/svgs/windows.svg',
+                    //     onTap: () {
+                    //       Share.share(
+                    //           'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for Windows.\nhttps://github.com/yaachay/rmt-windows');
+                    //     }),
+                    // CustomCircleButton(
+                    //     svgPath: 'assets/svgs/mac-os.svg',
+                    //     onTap: () {
+                    //       Share.share(
+                    //           'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for macOS.\nhttps://github.com/yaachay/rmt-macos');
+                    //     }),
+                    // CustomCircleButton(
+                    //     svgPath: 'assets/svgs/linux.svg',
+                    //     onTap: () {
+                    //       Share.share(
+                    //           'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for Linux.\nhttps://github.com/yaachay/rmt-linux');
+                    //     }),
+                    const SizedBox(
+                      width: 30,
+                      height: 30,
+                    ),
+                  ],
+                )
+              ],
+            )
+          ],
         ),
       ),
     );

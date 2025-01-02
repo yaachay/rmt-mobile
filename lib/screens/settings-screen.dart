@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 import 'package:rakhine_myanmar_translator/widgets/widgets.dart';
@@ -20,9 +21,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
           onPressed: () {
             ZoomDrawer.of(context)!.toggle();
           },
-          icon: const Icon(
-            Icons.menu,
-            color: Palette.icon,
+          icon: SvgPicture.asset(
+            width: 30,
+            height: 30,
+            'assets/svgs/menu.svg',
+            color: Palette.text,
           ),
         ),
         title: const Text(
@@ -30,6 +33,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           style: TextStyle(color: Palette.text, fontSize: 20),
         ),
         backgroundColor: Palette.scaffold,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
       ),
       body: const Center(
         child: Text(
