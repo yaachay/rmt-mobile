@@ -19,21 +19,21 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'RM Translator',
         theme: ThemeData(
-            useMaterial3: true,
-            fontFamily: 'Inder',
-            primaryColor: Palette.primary,
-            appBarTheme: const AppBarTheme(backgroundColor: Palette.scaffold),
-            scaffoldBackgroundColor: Palette.scaffold,
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: Palette.primary,
-              secondary: Palette.primary,
-            )),
+          useMaterial3: true,
+          fontFamily: 'Inder',
+          primaryColor: Palette.primary,
+          appBarTheme: const AppBarTheme(backgroundColor: Palette.scaffold),
+          scaffoldBackgroundColor: Palette.scaffold,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Palette.primary,
+            secondary: Palette.primary,
+          ),
+        ),
         initialRoute: '/',
         routes: {
           '/': (context) => const SplashScreen(),
           '/nav': (context) => const NavScreen(),
           '/home': (context) => const HomeScreen(),
-          '/ai-generator': (context) => const AiGeneratorScreen(),
           '/favorite': (context) => const FavoritesScreen(),
           '/settings': (context) => const SettingsScreen(),
           '/share-app': (context) => const ShareAppScreen(),

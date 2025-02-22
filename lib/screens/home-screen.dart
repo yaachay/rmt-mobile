@@ -6,13 +6,19 @@ import 'package:animated_switcher_plus/animated_switcher_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
-import 'package:rakhine_myanmar_translator/services/translator.dart';
+import 'package:rakhine_myanmar_translator/services/services.dart';
 import 'package:rakhine_myanmar_translator/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String? text;
+  final String? lang;
+
+  const HomeScreen({
+    super.key,
+    this.text,
+    this.lang,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -33,6 +39,38 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _textBoxHeight =
           (lines * 23.0).clamp(100.0, 700.0); // Adjust height with a limit
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Check if widget.text and widget.lang are not null
+    if (widget.text != null && widget.lang != null) {
+      String initialText = widget.text!;
+
+      // Perform translation based on the language (rk or my)
+      if (widget.lang == "rk") {
+        // Asynchronous translation
+        _translateAndSetState(initialText, true, TranslatorService.rkToMY);
+      } else if (widget.lang == "my") {
+        // Asynchronous translation
+        _translateAndSetState(initialText, false, TranslatorService.myToRK);
+      }
+    }
+  }
+
+// Helper function to perform translation and update UI state
+  Future<void> _translateAndSetState(String initialText, bool rk2MY,
+      Future<String> Function(String) translationFunction) async {
+    String translatedText = await translationFunction(initialText);
+
+    // Update UI state inside setState
+    setState(() {
+      _rk2MY = rk2MY;
+      _firstTextBoxController.text = initialText;
+      _secondTextBoxController.text = translatedText;
     });
   }
 
@@ -196,18 +234,34 @@ class _HomeScreenState extends State<HomeScreen> {
                                       color: Palette.text,
                                       fontFamily: 'Pyidaungsu',
                                     ),
-                                    onChanged: (value) {
-                                      _adjustTextBoxHeight(value);
-                                      setState(
-                                        () async {
-                                          String text = _rk2MY
-                                              ? await TranslatorService.rkToMY(
-                                                  value)
-                                              : await TranslatorService.my2RK(
-                                                  value);
-                                          _secondTextBoxController.text = text;
-                                        },
-                                      );
+                                    // onChanged: (value) {
+                                    //   _adjustTextBoxHeight(value);
+                                    //   setState(
+                                    //     () async {
+                                    //       String text = _rk2MY
+                                    //           ? await TranslatorService.rkToMY(
+                                    //               value)
+                                    //           : await TranslatorService.myToRK(
+                                    //               value);
+                                    //       _secondTextBoxController.text = text;
+                                    //     },
+                                    //   );
+                                    // },
+                                    onChanged: (value) async {
+                                      _adjustTextBoxHeight(
+                                          value); // Keep this outside setState
+
+                                      // Perform the async translation
+                                      String text = _rk2MY
+                                          ? await TranslatorService.rkToMY(
+                                              value)
+                                          : await TranslatorService.myToRK(
+                                              value);
+
+                                      // Update the UI inside setState (sync operation)
+                                      setState(() {
+                                        _secondTextBoxController.text = text;
+                                      });
                                     },
                                   ),
                                 ),
@@ -324,22 +378,34 @@ class _HomeScreenState extends State<HomeScreen> {
                                   color: Palette.hintText,
                                 ),
                               ),
-                              ...DotEnv.recent_history.map((e) {
-                                return Container(
-                                  width: double.infinity,
-                                  padding: const EdgeInsets.all(10),
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 5),
-                                  decoration: BoxDecoration(
-                                      color: Palette.scaffoldSecondary,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Text(
-                                    e['text'],
-                                    style: const TextStyle(
-                                      color: Palette.text,
-                                      fontFamily: 'Pyidaungsu',
-                                    ),
-                                  ),
+                              ...DotEnv.recent_history.asMap().entries.map((e) {
+                                return CustomTextItem(
+                                  index: e.key.toString(),
+                                  text: e.value['text'],
+                                  lang: e.value['lang'],
+                                  onDismissed: (direction) {
+                                    debugPrint(direction.toString());
+                                  },
+                                  onTap: () async {
+                                    // Perform asynchronous translation first
+                                    _rk2MY = (e.value["lang"] == "rk")
+                                        ? true
+                                        : false;
+                                    _firstTextBoxController.text =
+                                        e.value['text'];
+
+                                    String translatedText = _rk2MY
+                                        ? await TranslatorService.rkToMY(
+                                            e.value['text'])
+                                        : await TranslatorService.myToRK(
+                                            e.value['text']);
+
+                                    // Now call setState to update the UI with the translated text
+                                    setState(() {
+                                      _secondTextBoxController.text =
+                                          translatedText;
+                                    });
+                                  },
                                 );
                               }),
                             ],

@@ -36,10 +36,43 @@ class _SettingsScreenState extends State<SettingsScreen> {
         elevation: 0,
         surfaceTintColor: Colors.transparent,
       ),
-      body: const Center(
-        child: Text(
-          'Settings',
-          style: TextStyle(color: Palette.text),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 10,
+            ),
+            CustomSettingItem(
+              iconPath: "assets/svgs/theme.svg",
+              title: "Theme",
+              subtitle: "System Default",
+              action: Container(
+                width: 40,
+                height: 40,
+                color: Colors.redAccent,
+              ),
+            ),
+            CustomSettingItem(
+              iconPath: "assets/svgs/heart-fill.svg",
+              title: "Favourite",
+              subtitle: "Clear all favourites.",
+              action: Container(
+                width: 40,
+                height: 40,
+                color: Colors.redAccent,
+              ),
+            ),
+            CustomSettingItem(
+              iconPath: "assets/svgs/history.svg",
+              title: "History",
+              subtitle: "Clear all histories.",
+              action: Container(
+                width: 40,
+                height: 40,
+                color: Colors.redAccent,
+              ),
+            ),
+          ],
         ),
       ),
     );

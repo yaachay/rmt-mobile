@@ -1,13 +1,21 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 import 'package:rakhine_myanmar_translator/screens/screens.dart';
 import 'package:rakhine_myanmar_translator/widgets/widgets.dart';
 import 'package:wiredash/wiredash.dart';
 
 class NavScreen extends StatefulWidget {
-  const NavScreen({super.key});
+  final String? initalText;
+  final String? initalLang;
+
+  const NavScreen({
+    super.key,
+    this.initalText,
+    this.initalLang,
+  });
 
   @override
   State<NavScreen> createState() => _NavScreenState();
@@ -16,9 +24,11 @@ class NavScreen extends StatefulWidget {
 class _NavScreenState extends State<NavScreen> {
   final _zoomDrawerController = ZoomDrawerController();
   int _selectedIndex = 0;
+  String _initialText = "";
+  String _initialLang = "";
+
   final List<Widget> _screens = const [
     HomeScreen(),
-    AiGeneratorScreen(),
     FavoritesScreen(),
     SettingsScreen(),
     ShareAppScreen(),
@@ -30,11 +40,6 @@ class _NavScreenState extends State<NavScreen> {
       'label': 'Home',
       'svgFill': 'assets/svgs/home-fill.svg',
       'svgOutline': 'assets/svgs/home-outline.svg',
-    },
-    {
-      'label': 'AI Generator',
-      'svgFill': 'assets/svgs/chat-gpt.svg',
-      'svgOutline': 'assets/svgs/chat-gpt.svg',
     },
     {
       'label': 'Favourites',
@@ -57,6 +62,18 @@ class _NavScreenState extends State<NavScreen> {
       'svgOutline': 'assets/svgs/info-outline.svg',
     },
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initalText != null && widget.initalLang != null) {
+      setState(() {
+        _selectedIndex = 0;
+        _initialText = widget.initalText!;
+        _initialLang = widget.initalLang!;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +132,9 @@ class _NavScreenState extends State<NavScreen> {
                         onTap: () {
                           ZoomDrawer.of(context)!.toggle();
                           setState(() {
+                            //Reset to home screen and change screen index
+                            _initialText = "";
+                            _initialLang = "";
                             _selectedIndex = index;
                           });
                         },
@@ -149,7 +169,12 @@ class _NavScreenState extends State<NavScreen> {
           ],
         ),
       ),
-      mainScreen: _screens[_selectedIndex],
+      mainScreen: (_initialText == "" && _initialLang == "")
+          ? _screens[_selectedIndex]
+          : HomeScreen(
+              text: _initialText,
+              lang: _initialLang,
+            ),
       mainScreenScale: 0.2,
       borderRadius: 15.0,
       angle: 0.0,

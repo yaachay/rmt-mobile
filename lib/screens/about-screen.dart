@@ -13,11 +13,12 @@ class AboutScreen extends StatefulWidget {
 
 class _AboutScreenState extends State<AboutScreen> {
   final List<Map<String, String>> members = [
-    {'name': 'Kyaw Zaya', 'task': 'Coding'},
-    {'name': 'Myat Aye Thwel', 'task': 'Design'},
-    {'name': 'Khin Hnin Wai', 'task': 'Data'},
-    {'name': 'Nu Thandar Htun', 'task': 'Data'},
-    {'name': 'Phyoe Thiri Aung', 'task': 'Data'},
+    {'name': 'Kyaw Zaya', 'task': 'Design, Coding'},
+    {'name': 'Myat Aye Thway', 'task': 'Data, Testing'},
+    {'name': 'Khin Hnin Wai', 'task': 'Data, Testing'},
+    {'name': 'Nu Thandar Htun', 'task': 'Data, Testing'},
+    {'name': 'Phyoe Thiri Aung', 'task': 'Data, Testing'},
+    {'name': 'Kyel Sin Win Naing', 'task': 'Data, Testing'},
   ];
   final List<String> purposes = [
     'Hello world1 Hello world1 Hello world1 Hello world1 Hello world1 Hello world1 Hello world1',

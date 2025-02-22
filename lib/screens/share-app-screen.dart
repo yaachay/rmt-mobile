@@ -42,19 +42,23 @@ class _ShareAppScreenState extends State<ShareAppScreen> {
         elevation: 0,
         surfaceTintColor: Colors.transparent,
       ),
-      body: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            const SizedBox(
+              height: 100,
+            ),
             Text(
               'Scan for ${Platform.operatingSystem} app',
               style: const TextStyle(color: Palette.text, fontSize: 20),
             ),
+            const SizedBox(
+              height: 30,
+            ),
             Neumorphism(
-              // offset: 5,
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               child: Container(
                 width: 200,
@@ -72,7 +76,7 @@ class _ShareAppScreenState extends State<ShareAppScreen> {
                     decoration: PrettyQrDecoration(
                       shape: PrettyQrRoundedSymbol(color: Colors.black87),
                       image: PrettyQrDecorationImage(
-                        image: const AssetImage('assets/images/image.png'),
+                        image: const AssetImage('assets/images/logo.png'),
                         padding: const EdgeInsets.all(10),
                         scale: .3,
                         opacity: 0.8,
@@ -82,71 +86,94 @@ class _ShareAppScreenState extends State<ShareAppScreen> {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 50,
+            ),
             SizedBox(
               width: 250,
+              height: 50,
               child: CustomButton(
-                svgPath: 'assets/svgs/play-store.svg',
-                text: 'Find more apps',
-                onTap: () {},
+                svgPath: 'assets/svgs/upgrade.svg',
+                text: 'Check for update',
+                onTap: () {
+                  showModalBottomSheet<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CustomBottomSheet(
+                        title: 'Hello world!',
+                        child: Container(
+                          height: 170,
+                          color: Colors.red,
+                        ),
+                      );
+                    },
+                  );
+                },
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'Share app for:',
-                  style: TextStyle(
-                    color: Palette.text,
-                    fontWeight: FontWeight.bold,
+            const SizedBox(
+              height: 100,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Share app for:',
+                    style: TextStyle(
+                      color: Palette.text,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const SizedBox(
-                      width: 30,
-                      height: 30,
-                    ),
-                    CustomCircleButton(
-                        svgPath: 'assets/svgs/android.svg',
-                        onTap: () {
-                          Share.share(
-                              'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for Android.\nhttps://github.com/yaachay/rmt-android');
-                        }),
-                    CustomCircleButton(
-                        svgPath: 'assets/svgs/ios.svg',
-                        onTap: () {
-                          Share.share(
-                              'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for iOS.\nhttps://github.com/yaachay/rmt-ios');
-                        }),
-                    // CustomCircleButton(
-                    //     svgPath: 'assets/svgs/windows.svg',
-                    //     onTap: () {
-                    //       Share.share(
-                    //           'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for Windows.\nhttps://github.com/yaachay/rmt-windows');
-                    //     }),
-                    // CustomCircleButton(
-                    //     svgPath: 'assets/svgs/mac-os.svg',
-                    //     onTap: () {
-                    //       Share.share(
-                    //           'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for macOS.\nhttps://github.com/yaachay/rmt-macos');
-                    //     }),
-                    // CustomCircleButton(
-                    //     svgPath: 'assets/svgs/linux.svg',
-                    //     onTap: () {
-                    //       Share.share(
-                    //           'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for Linux.\nhttps://github.com/yaachay/rmt-linux');
-                    //     }),
-                    const SizedBox(
-                      width: 30,
-                      height: 30,
-                    ),
-                  ],
-                )
-              ],
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const SizedBox(
+                        width: 30,
+                        height: 30,
+                      ),
+                      CustomCircleButton(
+                          svgPath: 'assets/svgs/android.svg',
+                          onTap: () {
+                            Share.share(
+                                'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for Android.\nhttps://github.com/yaachay/rmt-android');
+                          }),
+                      CustomCircleButton(
+                          svgPath: 'assets/svgs/ios.svg',
+                          onTap: () {
+                            Share.share(
+                                'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for iOS.\nhttps://github.com/yaachay/rmt-ios');
+                          }),
+                      // CustomCircleButton(
+                      //     svgPath: 'assets/svgs/windows.svg',
+                      //     onTap: () {
+                      //       Share.share(
+                      //           'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for Windows.\nhttps://github.com/yaachay/rmt-windows');
+                      //     }),
+                      // CustomCircleButton(
+                      //     svgPath: 'assets/svgs/mac-os.svg',
+                      //     onTap: () {
+                      //       Share.share(
+                      //           'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for macOS.\nhttps://github.com/yaachay/rmt-macos');
+                      //     }),
+                      // CustomCircleButton(
+                      //     svgPath: 'assets/svgs/linux.svg',
+                      //     onTap: () {
+                      //       Share.share(
+                      //           'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for Linux.\nhttps://github.com/yaachay/rmt-linux');
+                      //     }),
+                      const SizedBox(
+                        width: 30,
+                        height: 30,
+                      ),
+                    ],
+                  )
+                ],
+              ),
             )
           ],
         ),

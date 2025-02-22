@@ -1,1 +1,1 @@
-export 'knowledge-model.dart';
+export 'record.dart';

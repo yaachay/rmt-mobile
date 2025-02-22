@@ -1,14 +1,17 @@
 // ignore_for_file: file_names
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import './services.dart';
 
 class TranslatorService {
   static Future<String> rkToMY(String output) async {
-    WidgetsFlutterBinding.ensureInitialized();
     List<Map<String, String>> rules = [];
-    List<Map<String, dynamic>> results = await getDataFromKnowledgebase();
+    List<Map<String, dynamic>> results = (Platform.isAndroid || Platform.isIOS)
+        ? await DatabaseService.readKnowledges4Mobile()
+        : await DatabaseService.readKnowledges4Desktop();
     for (var result in results) {
       rules.add({
         'from': result['rakhine'].toString(),
@@ -19,10 +22,11 @@ class TranslatorService {
     return TranslatorService.replaceWithRule(rules, output);
   }
 
-  static Future<String> my2RK(String output) async {
-    WidgetsFlutterBinding.ensureInitialized();
+  static Future<String> myToRK(String output) async {
     List<Map<String, String>> rules = [];
-    List<Map<String, dynamic>> results = await getDataFromKnowledgebase();
+    List<Map<String, dynamic>> results = (Platform.isAndroid || Platform.isIOS)
+        ? await DatabaseService.readKnowledges4Mobile()
+        : await DatabaseService.readKnowledges4Desktop();
     for (var result in results) {
       rules.add({
         'from': result['myanmar'].toString(),
@@ -44,12 +48,13 @@ class TranslatorService {
     return input;
   }
 
-  static Future<List<Map<String, dynamic>>> getDataFromKnowledgebase() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    Database database = await OpenDatabaseFromAssets();
-    List<Map<String, dynamic>> results =
-        await database.rawQuery('SELECT * FROM knowledgebase');
-    // await database.close();
-    return results;
-  }
+  // static Future<List<Map<String, dynamic>>> getDataFromKnowledgebase() async {
+  //   WidgetsFlutterBinding.ensureInitialized();
+  //   Database db4Mobile = await DatabaseService.readKnowledges4Mobile();
+  //   Database db4Desktop = await DatabaseService.readKnowledges4Desktop();
+  //   List<Map<String, dynamic>> results = (Platform.isAndroid || Platform.isIOS)
+  //       ? await db4Mobile.rawQuery('SELECT * FROM knowledgebase')
+  //       : await db4Desktop.query('knowledgebase');
+  //   return results;
+  // }
 }

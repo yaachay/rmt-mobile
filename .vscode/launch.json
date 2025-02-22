@@ -8,21 +8,21 @@
       "name": "rakhine_myanmar_translator",
       "request": "launch",
       "type": "dart",
-      "deviceId": "a80b68ec"
+      "deviceId": "windows"
     },
     {
       "name": "rakhine_myanmar_translator (profile mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile",
-      "deviceId": "a80b68ec"
+      "deviceId": "windows"
     },
     {
       "name": "rakhine_myanmar_translator (release mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release",
-      "deviceId": "a80b68ec"
+      "deviceId": "windows"
     }
   ]
 }

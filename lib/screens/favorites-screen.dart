@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
+import 'package:rakhine_myanmar_translator/screens/screens.dart';
 import 'package:rakhine_myanmar_translator/widgets/widgets.dart';
 
 class FavoritesScreen extends StatefulWidget {
@@ -41,22 +42,22 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Column(
               children: [
-                ...DotEnv.recent_history.map((e) {
-                  return Container(
-                    width: double.infinity,
-                    // height: 100,
-                    padding: const EdgeInsets.all(10),
-                    margin: const EdgeInsets.symmetric(vertical: 5),
-                    decoration: BoxDecoration(
-                        color: Palette.scaffoldSecondary,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Text(
-                      e['text'],
-                      style: const TextStyle(
-                        color: Palette.text,
-                        fontFamily: 'Pyidaungsu',
-                      ),
-                    ),
+                ...DotEnv.recent_history.asMap().entries.map((e) {
+                  return CustomTextItem(
+                    index: e.key.toString(),
+                    text: e.value['text'],
+                    lang: e.value['lang'],
+                    onDismissed: (direction) {
+                      debugPrint(direction.toString());
+                    },
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NavScreen(
+                                  initalText: e.value['text'],
+                                  initalLang: e.value['lang'])));
+                    },
                   );
                 }),
               ],
