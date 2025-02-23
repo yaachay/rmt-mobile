@@ -294,6 +294,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             tooltip: 'Copy',
                                             onTap: () {},
                                           ),
+                                          const Expanded(
+                                            child: SizedBox.shrink(),
+                                          ),
                                           CustomTbButton(
                                             svgPath: 'assets/svgs/cancel.svg',
                                             svgSize: 27,
@@ -306,56 +309,56 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   _firstTextBoxController.text);
                                             },
                                           ),
-                                          Expanded(
-                                            child: Container(
-                                              padding: const EdgeInsets.only(
-                                                  left: 10),
-                                              decoration: BoxDecoration(
-                                                color: Palette.hintText
-                                                    .withOpacity(0.1),
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  const Expanded(
-                                                    child: Text(
-                                                      'Generate with AI',
-                                                      style: TextStyle(
-                                                        color: Palette.hintText,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    width: 50,
-                                                    height: 35,
-                                                    decoration: BoxDecoration(
-                                                      gradient: Palette
-                                                          .primaryGradient,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20),
-                                                    ),
-                                                    child: IconButton(
-                                                      icon: SvgPicture.asset(
-                                                        'assets/svgs/send.svg',
-                                                        width: 45,
-                                                        height: 45,
-                                                        color: Colors.white,
-                                                      ),
-                                                      onPressed: () {},
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
+                                          // Expanded(
+                                          //   child: Container(
+                                          //     padding: const EdgeInsets.only(
+                                          //         left: 10),
+                                          //     decoration: BoxDecoration(
+                                          //       color: Palette.hintText
+                                          //           .withOpacity(0.1),
+                                          //       borderRadius:
+                                          //           BorderRadius.circular(20),
+                                          //     ),
+                                          //     child: Row(
+                                          //       mainAxisSize: MainAxisSize.min,
+                                          //       mainAxisAlignment:
+                                          //           MainAxisAlignment
+                                          //               .spaceBetween,
+                                          //       children: [
+                                          //         const Expanded(
+                                          //           child: Text(
+                                          //             'Generate with AI',
+                                          //             style: TextStyle(
+                                          //               color: Palette.hintText,
+                                          //               fontWeight:
+                                          //                   FontWeight.bold,
+                                          //             ),
+                                          //           ),
+                                          //         ),
+                                          //         Container(
+                                          //           width: 50,
+                                          //           height: 35,
+                                          //           decoration: BoxDecoration(
+                                          //             gradient: Palette
+                                          //                 .primaryGradient,
+                                          //             borderRadius:
+                                          //                 BorderRadius.circular(
+                                          //                     20),
+                                          //           ),
+                                          //           child: IconButton(
+                                          //             icon: SvgPicture.asset(
+                                          //               'assets/svgs/send.svg',
+                                          //               width: 45,
+                                          //               height: 45,
+                                          //               color: Colors.white,
+                                          //             ),
+                                          //             onPressed: () {},
+                                          //           ),
+                                          //         ),
+                                          //       ],
+                                          //     ),
+                                          //   ),
+                                          // ),
                                         ],
                                       ),
                               )

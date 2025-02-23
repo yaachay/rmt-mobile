@@ -140,32 +140,32 @@ class _ShareAppScreenState extends State<ShareAppScreen> {
                           svgPath: 'assets/svgs/android.svg',
                           onTap: () {
                             Share.share(
-                                'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for Android.\nhttps://github.com/yaachay/rmt-android');
+                                'RM Translator Official Download Website\nhttps://yaachay.github.io\nDirect download link of RM Translator for Android.\nhttps://raw.githubusercontent.com/yaachay/rmt-release/main/rm-translator.apk');
                           }),
                       CustomCircleButton(
                           svgPath: 'assets/svgs/ios.svg',
                           onTap: () {
                             Share.share(
-                                'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for iOS.\nhttps://github.com/yaachay/rmt-ios');
+                                'RM Translator Official Download Website\nhttps://yaachay.github.io\nDirect download link of RM Translator for iOS.\nhttps://raw.githubusercontent.com/yaachay/rmt-release/main/rm-translator.msi');
                           }),
-                      // CustomCircleButton(
-                      //     svgPath: 'assets/svgs/windows.svg',
-                      //     onTap: () {
-                      //       Share.share(
-                      //           'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for Windows.\nhttps://github.com/yaachay/rmt-windows');
-                      //     }),
-                      // CustomCircleButton(
-                      //     svgPath: 'assets/svgs/mac-os.svg',
-                      //     onTap: () {
-                      //       Share.share(
-                      //           'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for macOS.\nhttps://github.com/yaachay/rmt-macos');
-                      //     }),
-                      // CustomCircleButton(
-                      //     svgPath: 'assets/svgs/linux.svg',
-                      //     onTap: () {
-                      //       Share.share(
-                      //           'RM Translator Official Download Website\nhttps://github.com/yaachay/\nDirect download link of RM Translator for Linux.\nhttps://github.com/yaachay/rmt-linux');
-                      //     }),
+                      CustomCircleButton(
+                          svgPath: 'assets/svgs/windows.svg',
+                          onTap: () {
+                            Share.share(
+                                'RM Translator Official Download Website\nhttps://yaachay.github.io\nDirect download link of RM Translator for Windows.\nhttps://raw.githubusercontent.com/yaachay/rmt-release/main/rm-translator.msi');
+                          }),
+                      CustomCircleButton(
+                          svgPath: 'assets/svgs/mac-os.svg',
+                          onTap: () {
+                            Share.share(
+                                'RM Translator Official Download Website\nhttps://yaachay.github.io\nDirect download link of RM Translator for macOS.\nhttps://raw.githubusercontent.com/yaachay/rmt-release/main/rm-translator.dmg');
+                          }),
+                      CustomCircleButton(
+                          svgPath: 'assets/svgs/linux.svg',
+                          onTap: () {
+                            Share.share(
+                                'RM Translator Official Download Website\nhttps://yaachay.github.io\nDirect download link of RM Translator for Linux.\nhttps://raw.githubusercontent.com/yaachay/rmt-release/main/rm-translator.msi');
+                          }),
                       const SizedBox(
                         width: 30,
                         height: 30,

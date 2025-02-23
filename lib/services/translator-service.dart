@@ -1,9 +1,6 @@
 // ignore_for_file: file_names
 
 import 'dart:io';
-
-import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 import './services.dart';
 
 class TranslatorService {
@@ -47,14 +44,4 @@ class TranslatorService {
     }
     return input;
   }
-
-  // static Future<List<Map<String, dynamic>>> getDataFromKnowledgebase() async {
-  //   WidgetsFlutterBinding.ensureInitialized();
-  //   Database db4Mobile = await DatabaseService.readKnowledges4Mobile();
-  //   Database db4Desktop = await DatabaseService.readKnowledges4Desktop();
-  //   List<Map<String, dynamic>> results = (Platform.isAndroid || Platform.isIOS)
-  //       ? await db4Mobile.rawQuery('SELECT * FROM knowledgebase')
-  //       : await db4Desktop.query('knowledgebase');
-  //   return results;
-  // }
 }

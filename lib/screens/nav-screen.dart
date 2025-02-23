@@ -117,30 +117,32 @@ class _NavScreenState extends State<NavScreen> {
               ),
             ),
             Flexible(
+              flex: 1,
+              child: Container(),
+            ),
+            Flexible(
               flex: 4,
-              child: Center(
-                child: ListView.builder(
-                    itemCount: _menus.length,
-                    itemBuilder: (context, index) {
-                      final menu = _menus[index];
-                      return CustomDrawerItem(
-                        svgPath: index == _selectedIndex
-                            ? menu['svgFill']
-                            : menu['svgOutline'],
-                        text: menu['label'],
-                        isActive: index == _selectedIndex ? true : false,
-                        onTap: () {
-                          ZoomDrawer.of(context)!.toggle();
-                          setState(() {
-                            //Reset to home screen and change screen index
-                            _initialText = "";
-                            _initialLang = "";
-                            _selectedIndex = index;
-                          });
-                        },
-                      );
-                    }),
-              ),
+              child: ListView.builder(
+                  itemCount: _menus.length,
+                  itemBuilder: (context, index) {
+                    final menu = _menus[index];
+                    return CustomDrawerItem(
+                      svgPath: index == _selectedIndex
+                          ? menu['svgFill']
+                          : menu['svgOutline'],
+                      text: menu['label'],
+                      isActive: index == _selectedIndex ? true : false,
+                      onTap: () {
+                        ZoomDrawer.of(context)!.toggle();
+                        setState(() {
+                          //Reset to home screen and change screen index
+                          _initialText = "";
+                          _initialLang = "";
+                          _selectedIndex = index;
+                        });
+                      },
+                    );
+                  }),
             ),
             Flexible(
               flex: 1,
@@ -148,7 +150,7 @@ class _NavScreenState extends State<NavScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: CustomButton(
                     svgPath: 'assets/svgs/feedback.svg',
-                    svgSize: 35,
+                    svgSize: 40,
                     color: Palette.text,
                     text: 'Feedback',
                     padding: 5,

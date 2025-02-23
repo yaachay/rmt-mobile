@@ -39,6 +39,7 @@ class CustomSettingItem extends StatelessWidget {
                   iconPath,
                   width: iconSize,
                   height: iconSize,
+                  color: Palette.text,
                 ),
               ),
               Expanded(

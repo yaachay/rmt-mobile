@@ -46,30 +46,73 @@ class _SettingsScreenState extends State<SettingsScreen> {
               iconPath: "assets/svgs/theme.svg",
               title: "Theme",
               subtitle: "System Default",
-              action: Container(
-                width: 40,
-                height: 40,
-                color: Colors.redAccent,
-              ),
-            ),
-            CustomSettingItem(
-              iconPath: "assets/svgs/heart-fill.svg",
-              title: "Favourite",
-              subtitle: "Clear all favourites.",
-              action: Container(
-                width: 40,
-                height: 40,
-                color: Colors.redAccent,
+              action: CustomSettingButton(
+                text: 'System Default',
+                isDropdown: true,
+                onTap: () {
+                  showModalBottomSheet<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CustomBottomSheet(
+                        title: 'Theme',
+                        subtitle: 'Select one theme as you like.',
+                        child: Container(
+                          height: 170,
+                          color: Colors.red,
+                        ),
+                      );
+                    },
+                  );
+                },
               ),
             ),
             CustomSettingItem(
               iconPath: "assets/svgs/history.svg",
               title: "History",
               subtitle: "Clear all histories.",
-              action: Container(
-                width: 40,
-                height: 40,
+              action: CustomSettingButton(
+                text: 'Clear',
+                svgPath: "assets/svgs/clear.svg",
+                onTap: () {
+                  showModalBottomSheet<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CustomBottomSheet(
+                        title: 'Are you sure?',
+                        subtitle: 'Are you sure to clear all histories?',
+                        child: Container(
+                          height: 170,
+                          color: Colors.red,
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+            CustomSettingItem(
+              iconPath: "assets/svgs/heart-fill.svg",
+              title: "Favourite",
+              subtitle: "Clear all favourites.",
+              action: CustomSettingButton(
+                text: 'Delete',
+                svgPath: "assets/svgs/delete.svg",
                 color: Colors.redAccent,
+                onTap: () {
+                  showModalBottomSheet<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CustomBottomSheet(
+                        title: 'Are you sure?',
+                        subtitle: 'Are you sure to delete all favourites?',
+                        child: Container(
+                          height: 170,
+                          color: Colors.red,
+                        ),
+                      );
+                    },
+                  );
+                },
               ),
             ),
           ],
