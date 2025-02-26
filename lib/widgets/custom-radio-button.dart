@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:rakhine_myanmar_translator/configs/configs.dart';
 import 'package:rakhine_myanmar_translator/models/models.dart';
+import 'package:rakhine_myanmar_translator/providers/providers.dart';
 
 class CustomRadioButton<T extends CustomRadioValue> extends StatelessWidget {
   final double? width;

@@ -102,7 +102,7 @@ class ThemeProvider extends ChangeNotifier {
     } else if (theme == Themes.darkTheme) {
       _primary = const Color(0xFF308AF4);
       _scaffold = const Color(0xFF383838);
-      _scaffoldSecondary = const Color(0xFF383838);
+      _scaffoldSecondary = const Color(0xFF1E1E1E);
       _scaffoldShadow = const Color(0x10FFFFFF);
 
       _appBarGradient = const LinearGradient(
@@ -126,7 +126,7 @@ class ThemeProvider extends ChangeNotifier {
       _black = const Color(0xFF000000);
 
       _topBoxShadow = const Color(0x50FFFFFF);
-      _bottomBoxShadow = const Color(0xFF000000);
+      _bottomBoxShadow = const Color(0xFF1A1A1A);
 
       _shimmerBase = const Color(0xFFFFFFFF);
       _shimmerHighlight = const Color(0xFF383838);

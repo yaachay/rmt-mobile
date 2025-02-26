@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:provider/provider.dart';
-import 'package:rakhine_myanmar_translator/configs/configs.dart';
 import 'package:rakhine_myanmar_translator/models/enum.dart';
 import 'package:rakhine_myanmar_translator/models/models.dart';
+import 'package:rakhine_myanmar_translator/providers/providers.dart';
 import 'package:rakhine_myanmar_translator/widgets/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -315,10 +315,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     context: context,
                     builder: (BuildContext context) {
                       return CustomBottomSheet(
-                        height: 200,
+                        height: 250,
                         title: languageProvider.areYouSure,
-                        subtitle:
-                            languageProvider.areYouSureToDeleteAllFavourite,
+                        subtitle: languageProvider.deleteAllFavourite,
                         child: Container(
                           margin: const EdgeInsets.symmetric(horizontal: 25.0),
                           child: Row(

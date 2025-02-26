@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
+import 'package:rakhine_myanmar_translator/providers/providers.dart';
 import 'package:rakhine_myanmar_translator/screens/screens.dart';
 import 'package:wiredash/wiredash.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => ThemeProvider()),
       ChangeNotifierProvider(create: (context) => LanguageProvider()),
+      ChangeNotifierProvider(create: (context) => DrawerProvider()),
+      ChangeNotifierProvider(create: (context) => ConnectionProvider()),
     ],
     child: const MyApp(),
   ));
@@ -21,10 +24,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final languageProvider = Provider.of<LanguageProvider>(context);
+    final drawerProvider = Provider.of<DrawerProvider>(context);
+    final connectionProvider = Provider.of<ConnectionProvider>(context);
     themeProvider.loadTheme();
     languageProvider.loadLanguage();
-    return Consumer2<ThemeProvider, LanguageProvider>(
-      builder: (context, themeProvider, languageProvider, child) {
+    return Consumer4<ThemeProvider, LanguageProvider, DrawerProvider,
+        ConnectionProvider>(
+      builder: (context, themeProvider, languageProvider, drawerProvider,
+          connectionProvider, child) {
         return Wiredash(
           projectId: DotEnv.wiredashProjectID,
           secret: DotEnv.wiredashSecret,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rakhine_myanmar_translator/configs/configs.dart';
+import 'package:rakhine_myanmar_translator/providers/providers.dart';
 
 class Neumorphism extends StatelessWidget {
   /// The [child] contained by `Neumorphism` Widget.

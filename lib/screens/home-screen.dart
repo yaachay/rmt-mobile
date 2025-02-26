@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
+import 'package:rakhine_myanmar_translator/providers/providers.dart';
 import 'package:rakhine_myanmar_translator/services/services.dart';
 import 'package:rakhine_myanmar_translator/widgets/widgets.dart';
 

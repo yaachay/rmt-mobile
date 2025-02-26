@@ -1,13 +1,11 @@
 // ignore_for_file: non_const_call_to_literal_constructor
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:provider/provider.dart';
-import 'package:rakhine_myanmar_translator/configs/configs.dart';
+import 'package:rakhine_myanmar_translator/providers/providers.dart';
 import 'package:rakhine_myanmar_translator/widgets/widgets.dart';
 import 'package:share_plus/share_plus.dart';
 

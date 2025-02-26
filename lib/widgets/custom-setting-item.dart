@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
+import 'package:rakhine_myanmar_translator/providers/providers.dart';
 import 'package:rakhine_myanmar_translator/widgets/widgets.dart';
 
 class CustomSettingItem extends StatelessWidget {
@@ -25,7 +26,7 @@ class CustomSettingItem extends StatelessWidget {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final languageProvider = Provider.of<LanguageProvider>(context);
     return Container(
-      height: 65,
+      height: 70,
       margin: const EdgeInsets.symmetric(
         horizontal: 15,
         vertical: 7,

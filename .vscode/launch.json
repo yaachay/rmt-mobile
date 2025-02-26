@@ -8,24 +8,27 @@
       "name": "rakhine_myanmar_translator",
       "request": "launch",
       "type": "dart",
-      // ္"deviceId": "906c9b77"
-      "deviceId": "df735890"
+      "deviceId": "906c9b77"
+      // "deviceId": "df735890"
+      // "deviceId": "windows"
     },
     {
       "name": "rakhine_myanmar_translator (profile mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile",
-      // ္"deviceId": "906c9b77"
-      "deviceId": "df735890"
+      "deviceId": "906c9b77"
+      // "deviceId": "df735890"
+      // "deviceId": "windows"
     },
     {
       "name": "rakhine_myanmar_translator (release mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release",
-      // ္"deviceId": "906c9b77"
-      "deviceId": "df735890"
+      "deviceId": "906c9b77"
+      // "deviceId": "df735890"
+      // "deviceId": "windows"
     }
   ]
 }
