@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 
@@ -17,7 +18,7 @@ class TextLogo extends StatefulWidget {
       this.logoSize = 20,
       this.boldColoredText = true,
       this.boldAll = false,
-      this.textColor = Palette.text});
+      this.textColor});
 
   @override
   State<TextLogo> createState() => _TextLogoState();
@@ -40,6 +41,8 @@ class _TextLogoState extends State<TextLogo> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
     return RichText(
       text: TextSpan(
         style: TextStyle(
@@ -51,14 +54,14 @@ class _TextLogoState extends State<TextLogo> {
           TextSpan(
             text: coloredText,
             style: TextStyle(
-              color: Palette.primary,
+              color: themeProvider.primary,
               fontWeight: widget.boldColoredText! ? FontWeight.w700 : null,
             ),
           ),
           TextSpan(
             text: remainText,
             style: TextStyle(
-              color: widget.textColor,
+              color: widget.textColor ?? themeProvider.text,
             ),
           ),
         ],

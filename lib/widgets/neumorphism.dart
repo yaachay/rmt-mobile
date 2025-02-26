@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 
 class Neumorphism extends StatelessWidget {
@@ -28,7 +29,7 @@ class Neumorphism extends StatelessWidget {
 
   const Neumorphism({
     super.key,
-    this.backgroundColor = Palette.scaffold,
+    this.backgroundColor,
     this.gradient,
     this.width,
     this.height,
@@ -40,21 +41,23 @@ class Neumorphism extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
     return Container(
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: backgroundColor,
+        color: backgroundColor ?? themeProvider.scaffold,
         gradient: gradient,
         borderRadius: borderRadius,
         boxShadow: [
           BoxShadow(
-            color: Palette.topBoxShadow,
+            color: themeProvider.topBoxShadow,
             blurRadius: blurRadius!,
             offset: Offset(-offset!, -offset!),
           ),
           BoxShadow(
-            color: Palette.bottomBoxShadow,
+            color: themeProvider.bottomBoxShadow,
             blurRadius: blurRadius!,
             offset: Offset(offset!, offset!),
           ),

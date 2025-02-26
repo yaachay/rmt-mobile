@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:provider/provider.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
+import 'package:rakhine_myanmar_translator/models/models.dart';
 import 'package:rakhine_myanmar_translator/widgets/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});
@@ -12,24 +15,76 @@ class AboutScreen extends StatefulWidget {
 }
 
 class _AboutScreenState extends State<AboutScreen> {
-  final List<Map<String, String>> members = [
-    {'name': 'Kyaw Zaya', 'task': 'Design, Coding'},
-    {'name': 'Myat Aye Thway', 'task': 'Data, Testing'},
-    {'name': 'Khin Hnin Wai', 'task': 'Data, Testing'},
-    {'name': 'Nu Thandar Htun', 'task': 'Data, Testing'},
-    {'name': 'Phyoe Thiri Aung', 'task': 'Data, Testing'},
-    {'name': 'Kyel Sin Win Naing', 'task': 'Data, Testing'},
-  ];
-  final List<String> purposes = [
-    'Hello world1 Hello world1 Hello world1 Hello world1 Hello world1 Hello world1 Hello world1',
-    'Hello world2',
-    'Hello world3',
-    'Hello world4',
-  ];
+  Languages? _currentLang;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    onLoad();
+  }
+
+  void onLoad() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? langString = prefs.getString('lang');
+    _currentLang = langString != null
+        ? Languages.values.firstWhere(
+            (e) => e.toString() == langString,
+            orElse: () => Languages.myanmar,
+          )
+        : null;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
+    final List<Map<String, String>> members = [
+      {
+        'name': (_currentLang == Languages.myanmar) ? 'ကျော်ဇေယျ' : 'Kyaw Zaya',
+        'task': 'Design, Coding'
+      },
+      {
+        'name': (_currentLang == Languages.myanmar)
+            ? 'မြတ်အေးသွယ်'
+            : 'Myat Aye Thway',
+        'task': 'Data, Testing'
+      },
+      {
+        'name': (_currentLang == Languages.myanmar)
+            ? 'ခင်နှင်းဝေ'
+            : 'Khin Hnin Wai',
+        'task': 'Data, Testing'
+      },
+      {
+        'name': (_currentLang == Languages.myanmar)
+            ? 'နုသန္တာထွန်း'
+            : 'Nu Thandar Htun',
+        'task': 'Data, Testing'
+      },
+      {
+        'name': (_currentLang == Languages.myanmar)
+            ? 'ဖြိုးသီရိအောင်'
+            : 'Phyoe Thiri Aung',
+        'task': 'Data, Testing'
+      },
+      {
+        'name': (_currentLang == Languages.myanmar)
+            ? 'ကြယ်စင်ဝင်းနိုင်'
+            : 'Kyel Sin Win Naing',
+        'task': 'Data, Testing'
+      },
+    ];
+    final List<String> purposes = [
+      (_currentLang == Languages.myanmar)
+          ? ''
+          : 'Hello world1 Hello world1 Hello world1 Hello world1 Hello world1 Hello world1 Hello world1',
+      (_currentLang == Languages.myanmar) ? '' : 'Hello world2',
+      (_currentLang == Languages.myanmar) ? '' : 'Hello world3',
+      (_currentLang == Languages.myanmar) ? '' : 'Hello world4',
+    ];
     return Scaffold(
-      backgroundColor: Palette.scaffold,
+      backgroundColor: themeProvider.scaffold,
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -39,14 +94,14 @@ class _AboutScreenState extends State<AboutScreen> {
             width: 30,
             height: 30,
             'assets/svgs/menu.svg',
-            color: Palette.text,
+            color: themeProvider.text,
           ),
         ),
-        title: const Text(
-          'About',
-          style: TextStyle(color: Palette.text, fontSize: 20),
+        title: Text(
+          languageProvider.aboutUs,
+          style: TextStyle(color: themeProvider.text, fontSize: 20),
         ),
-        backgroundColor: Palette.scaffold,
+        backgroundColor: themeProvider.scaffold,
         elevation: 0,
         surfaceTintColor: Colors.transparent,
       ),
@@ -54,33 +109,33 @@ class _AboutScreenState extends State<AboutScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 120,
                   width: double.infinity,
                 ),
-                IconLogo(
+                const IconLogo(
                   iconSize: 35,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 20.0),
+                  padding: const EdgeInsets.only(top: 20.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      TextLogo(logoSize: 20),
+                      const TextLogo(logoSize: 20),
                       Text(
                         DotEnv.packageName,
                         style: TextStyle(
-                          color: Palette.hintText,
+                          color: themeProvider.hintText,
                         ),
                       ),
                       Text(
-                        "version: ${DotEnv.versionNum}",
+                        "${languageProvider.version} : ${DotEnv.versionNum}",
                         style: TextStyle(
-                          color: Palette.hintText,
+                          color: themeProvider.hintText,
                         ),
                       ),
                     ],
@@ -97,20 +152,20 @@ class _AboutScreenState extends State<AboutScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Members',
-                    style: TextStyle(color: Palette.hintText),
+                  Text(
+                    languageProvider.members,
+                    style: TextStyle(color: themeProvider.hintText),
                   ),
                   ...members.map(
                     (e) => Row(
                       children: [
-                        const Text(
+                        Text(
                           ' • ',
-                          style: TextStyle(color: Palette.text),
+                          style: TextStyle(color: themeProvider.text),
                         ),
                         Text(
                           "${e['name']!} (${e['task']})",
-                          style: const TextStyle(color: Palette.text),
+                          style: TextStyle(color: themeProvider.text),
                         )
                       ],
                     ),
@@ -124,22 +179,22 @@ class _AboutScreenState extends State<AboutScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Purposes',
-                    style: TextStyle(color: Palette.hintText),
+                  Text(
+                    languageProvider.purpose,
+                    style: TextStyle(color: themeProvider.hintText),
                   ),
                   ...purposes.map(
                     (e) => Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           ' • ',
-                          style: TextStyle(color: Palette.text),
+                          style: TextStyle(color: themeProvider.text),
                         ),
                         Expanded(
                           child: Text(
                             e,
-                            style: const TextStyle(color: Palette.text),
+                            style: TextStyle(color: themeProvider.text),
                           ),
                         )
                       ],
@@ -152,10 +207,10 @@ class _AboutScreenState extends State<AboutScreen> {
               padding: const EdgeInsets.symmetric(vertical: 30),
               child: Column(
                 children: [
-                  const Text(
-                    'Contact me on:',
+                  Text(
+                    languageProvider.contactMeOn,
                     style: TextStyle(
-                      color: Palette.text,
+                      color: themeProvider.text,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

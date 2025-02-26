@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 import 'package:rakhine_myanmar_translator/widgets/widgets.dart';
 
@@ -24,8 +25,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
     return Scaffold(
-      backgroundColor: Palette.scaffold,
+      backgroundColor: themeProvider.scaffold,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -42,12 +45,12 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Column(
               children: [
                 LoadingAnimationWidget.progressiveDots(
-                  color: Palette.primary,
+                  color: themeProvider.primary,
                   size: 50,
                 ),
-                const Text(
-                  'version: 1.0.0',
-                  style: TextStyle(color: Palette.hintText),
+                Text(
+                  '${languageProvider.version} : ${DotEnv.versionNum}',
+                  style: TextStyle(color: themeProvider.hintText),
                 ),
               ],
             )),

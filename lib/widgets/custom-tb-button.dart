@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 
 class CustomTbButton extends StatelessWidget {
@@ -14,20 +15,22 @@ class CustomTbButton extends StatelessWidget {
       {super.key,
       required this.svgPath,
       this.svgSize = 25,
-      this.svgColor = Palette.icon,
+      this.svgColor,
       required this.tooltip,
       this.padding = 3,
       required this.onTap});
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
     return IconButton(
       padding: EdgeInsets.all(padding!),
       icon: SvgPicture.asset(
         svgPath,
         width: svgSize,
         height: svgSize,
-        color: svgColor,
+        color: svgColor ?? themeProvider.icon,
       ),
       tooltip: tooltip,
       onPressed: onTap,

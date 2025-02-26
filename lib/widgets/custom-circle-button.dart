@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rakhine_myanmar_translator/widgets/widgets.dart';
 
-class CustomCircleButton extends StatefulWidget {
+class CustomCircleButton extends StatelessWidget {
   final String svgPath;
   final double? padding;
   final void Function() onTap;
@@ -15,23 +15,18 @@ class CustomCircleButton extends StatefulWidget {
   });
 
   @override
-  State<CustomCircleButton> createState() => _CustomCircleButtonState();
-}
-
-class _CustomCircleButtonState extends State<CustomCircleButton> {
-  @override
   Widget build(BuildContext context) {
     return Neumorphism(
       borderRadius: BorderRadius.circular(50),
       child: InkWell(
-        onTap: widget.onTap,
+        onTap: onTap,
         borderRadius: BorderRadius.circular(50),
         child: Container(
           width: 45,
           height: 45,
-          padding: EdgeInsets.all(widget.padding!),
+          padding: EdgeInsets.all(padding!),
           child: SvgPicture.asset(
-            widget.svgPath,
+            svgPath,
           ),
         ),
       ),

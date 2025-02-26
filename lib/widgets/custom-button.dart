@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 import 'package:rakhine_myanmar_translator/widgets/neumorphism.dart';
 
@@ -30,6 +31,8 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
     return InkWell(
       borderRadius: BorderRadius.circular(borderRadius!),
       onTap: onTap,
@@ -44,7 +47,7 @@ class CustomButton extends StatelessWidget {
               (icon != null)
                   ? Icon(
                       icon,
-                      color: color,
+                      color: color ?? themeProvider.icon,
                       size: iconSize,
                     )
                   : const SizedBox.shrink(),
@@ -54,13 +57,13 @@ class CustomButton extends StatelessWidget {
                       height: svgSize,
                       child: SvgPicture.asset(
                         svgPath!,
-                        color: color,
+                        color: color ?? themeProvider.icon,
                       ),
                     )
                   : const SizedBox.shrink(),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
-                child: Text(text, style: const TextStyle(color: Palette.text)),
+                child: Text(text, style: TextStyle(color: themeProvider.text)),
               ),
             ],
           ),

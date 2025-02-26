@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 
 class CustomTextItem extends StatelessWidget {
@@ -19,6 +20,8 @@ class CustomTextItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
     return Dismissible(
       key: Key(index),
       direction: DismissDirection.endToStart,
@@ -46,13 +49,13 @@ class CustomTextItem extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           margin: const EdgeInsets.symmetric(vertical: 5),
           decoration: BoxDecoration(
-            color: Palette.scaffoldSecondary,
+            color: themeProvider.scaffoldSecondary,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Text(
             text,
-            style: const TextStyle(
-              color: Palette.text,
+            style: TextStyle(
+              color: themeProvider.text,
               fontFamily: 'Pyidaungsu',
             ),
           ),

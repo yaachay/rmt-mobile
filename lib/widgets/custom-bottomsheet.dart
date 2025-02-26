@@ -1,29 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 
-class CustomBottomSheet extends StatefulWidget {
+class CustomBottomSheet extends StatelessWidget {
+  final String? svgPath;
   final String title;
   final String? subtitle;
+  final double? height;
   final Widget child;
 
   const CustomBottomSheet({
     super.key,
+    this.svgPath = 'assets/svgs/notice.svg',
     required this.title,
-    this.subtitle,
+    this.subtitle = '',
+    this.height = 300,
     required this.child,
   });
 
   @override
-  State<CustomBottomSheet> createState() => _CustomBottomSheetState();
-}
-
-class _CustomBottomSheetState extends State<CustomBottomSheet> {
-  @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
     return Container(
       width: double.infinity,
-      height: 300,
+      height: height,
+      decoration: BoxDecoration(
+        color: themeProvider.scaffold,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+      ),
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
@@ -43,7 +49,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                     height: 5,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Palette.hintText,
+                      color: themeProvider.hintText,
                     ),
                   ),
                   const SizedBox(
@@ -68,7 +74,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                           'assets/svgs/cancel.svg',
                           width: 25,
                           height: 25,
-                          color: Palette.text,
+                          color: themeProvider.text,
                         ),
                       ),
                     ),
@@ -77,21 +83,49 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
               ),
             ],
           ),
-          Text(
-            widget.title,
-            style: const TextStyle(
-              color: Palette.text,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SvgPicture.asset(
+                  svgPath!,
+                  width: 50,
+                  height: 50,
+                  color: themeProvider.icon,
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        color: themeProvider.primary,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    (subtitle != '')
+                        ? Text(
+                            subtitle!,
+                            style: TextStyle(color: themeProvider.text),
+                          )
+                        : const SizedBox.shrink(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
-          (widget.subtitle != '')
-              ? Text(
-                  widget.subtitle!,
-                  style: const TextStyle(color: Palette.text),
-                )
-              : const SizedBox.shrink(),
-          Expanded(child: widget.child),
+          SizedBox(height: height! - 130, child: child),
         ],
       ),
     );

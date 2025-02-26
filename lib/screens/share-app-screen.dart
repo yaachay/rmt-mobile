@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
+import 'package:provider/provider.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 import 'package:rakhine_myanmar_translator/widgets/widgets.dart';
 import 'package:share_plus/share_plus.dart';
@@ -20,8 +21,10 @@ class ShareAppScreen extends StatefulWidget {
 class _ShareAppScreenState extends State<ShareAppScreen> {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
     return Scaffold(
-      backgroundColor: Palette.scaffold,
+      backgroundColor: themeProvider.scaffold,
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -31,14 +34,14 @@ class _ShareAppScreenState extends State<ShareAppScreen> {
             width: 30,
             height: 30,
             'assets/svgs/menu.svg',
-            color: Palette.text,
+            color: themeProvider.text,
           ),
         ),
-        title: const Text(
-          'Share App',
-          style: TextStyle(color: Palette.text, fontSize: 20),
+        title: Text(
+          languageProvider.shareApp,
+          style: TextStyle(color: themeProvider.text, fontSize: 20),
         ),
-        backgroundColor: Palette.scaffold,
+        backgroundColor: themeProvider.scaffold,
         elevation: 0,
         surfaceTintColor: Colors.transparent,
       ),
@@ -52,8 +55,8 @@ class _ShareAppScreenState extends State<ShareAppScreen> {
               height: 100,
             ),
             Text(
-              'Scan for ${Platform.operatingSystem} app',
-              style: const TextStyle(color: Palette.text, fontSize: 20),
+              languageProvider.scanToDownloadApp,
+              style: TextStyle(color: themeProvider.text, fontSize: 20),
             ),
             const SizedBox(
               height: 30,
@@ -94,7 +97,7 @@ class _ShareAppScreenState extends State<ShareAppScreen> {
               height: 50,
               child: CustomButton(
                 svgPath: 'assets/svgs/upgrade.svg',
-                text: 'Check for update',
+                text: languageProvider.checkForUpdate,
                 onTap: () {
                   showModalBottomSheet<void>(
                     context: context,
@@ -119,10 +122,10 @@ class _ShareAppScreenState extends State<ShareAppScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    'Share app for:',
+                  Text(
+                    languageProvider.shareAppFor,
                     style: TextStyle(
-                      color: Palette.text,
+                      color: themeProvider.text,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 
 class CustomDrawerItem extends StatelessWidget {
-  ///
+  /// Leading icon for CustomDrawerItem
   final IconData? icon;
 
   /// The size of the icon.
@@ -41,6 +42,8 @@ class CustomDrawerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
     return InkWell(
       onTap: onTap,
       mouseCursor: MouseCursor.uncontrolled,
@@ -49,19 +52,19 @@ class CustomDrawerItem extends StatelessWidget {
             ? Icon(
                 icon,
                 size: iconSize,
-                color: isActive ? Palette.primary : Palette.icon,
+                color: isActive ? themeProvider.primary : themeProvider.icon,
               )
             : SvgPicture.asset(
                 svgPath!,
                 width: svgSize,
                 height: svgSize,
-                color: isActive ? Palette.primary : Palette.icon,
+                color: isActive ? themeProvider.primary : themeProvider.icon,
               ),
         title: Text(
           text,
           style: TextStyle(
             fontSize: textSize,
-            color: isActive ? Palette.primary : Palette.icon,
+            color: isActive ? themeProvider.primary : themeProvider.icon,
           ),
         ),
       ),

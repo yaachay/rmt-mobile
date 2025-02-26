@@ -1,3 +1,4 @@
 {
-  "cmake.sourceDirectory": "D:/YAA-CHAY/flutter/rakhine_myanmar_translator/linux"
+  "cmake.sourceDirectory": "D:/YAA-CHAY/flutter/rakhine_myanmar_translator/linux",
+  "java.configuration.updateBuildConfiguration": "interactive"
 }

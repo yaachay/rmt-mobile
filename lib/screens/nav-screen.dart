@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:provider/provider.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 import 'package:rakhine_myanmar_translator/screens/screens.dart';
 import 'package:rakhine_myanmar_translator/widgets/widgets.dart';
@@ -27,40 +28,12 @@ class _NavScreenState extends State<NavScreen> {
   String _initialText = "";
   String _initialLang = "";
 
-  final List<Widget> _screens = const [
-    HomeScreen(),
-    FavoritesScreen(),
-    SettingsScreen(),
-    ShareAppScreen(),
-    AboutScreen()
-  ];
-
-  final List<Map<String, dynamic>> _menus = [
-    {
-      'label': 'Home',
-      'svgFill': 'assets/svgs/home-fill.svg',
-      'svgOutline': 'assets/svgs/home-outline.svg',
-    },
-    {
-      'label': 'Favourites',
-      'svgFill': 'assets/svgs/heart-fill.svg',
-      'svgOutline': 'assets/svgs/heart-outline.svg',
-    },
-    {
-      'label': 'Settings',
-      'svgFill': 'assets/svgs/setting-fill.svg',
-      'svgOutline': 'assets/svgs/setting-outline.svg',
-    },
-    {
-      'label': 'Share App',
-      'svgFill': 'assets/svgs/share-fill.svg',
-      'svgOutline': 'assets/svgs/share-outline.svg',
-    },
-    {
-      'label': 'About',
-      'svgFill': 'assets/svgs/info-fill.svg',
-      'svgOutline': 'assets/svgs/info-outline.svg',
-    },
+  final List<Widget> _screens = [
+    const HomeScreen(),
+    const FavoritesScreen(),
+    const SettingsScreen(),
+    const ShareAppScreen(),
+    const AboutScreen()
   ];
 
   @override
@@ -77,72 +50,124 @@ class _NavScreenState extends State<NavScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
+    final List<Map<String, dynamic>> menus = [
+      {
+        'label': languageProvider.home,
+        'svgFill': 'assets/svgs/home-fill.svg',
+        'svgOutline': 'assets/svgs/home-outline.svg',
+      },
+      {
+        'label': languageProvider.favourites,
+        'svgFill': 'assets/svgs/heart-fill.svg',
+        'svgOutline': 'assets/svgs/heart-outline.svg',
+      },
+      {
+        'label': languageProvider.settings,
+        'svgFill': 'assets/svgs/setting-fill.svg',
+        'svgOutline': 'assets/svgs/setting-outline.svg',
+      },
+      {
+        'label': languageProvider.shareApp,
+        'svgFill': 'assets/svgs/share-fill.svg',
+        'svgOutline': 'assets/svgs/share-outline.svg',
+      },
+      {
+        'label': languageProvider.aboutUs,
+        'svgFill': 'assets/svgs/info-fill.svg',
+        'svgOutline': 'assets/svgs/info-outline.svg',
+      },
+    ];
     return ZoomDrawer(
       controller: _zoomDrawerController,
       menuScreen: Scaffold(
-        backgroundColor: Palette.scaffold,
+        backgroundColor: themeProvider.scaffold,
         body: Column(
           children: [
             Flexible(
               flex: 1,
-              child: Container(),
-            ),
-            Flexible(
-              flex: 1,
-              child: Container(
-                padding: const EdgeInsets.only(left: 15),
-                // color: Colors.yellow,
-                child: const Row(
-                  children: [
-                    IconLogo(
-                      iconSize: 30,
-                      glowRadiusFactor: 1.2,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: Row(
+                      children: [
+                        const IconLogo(
+                          iconSize: 30,
+                          glowRadiusFactor: 1.2,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const TextLogo(logoSize: 18),
+                              Text(
+                                "${languageProvider.version}: ${DotEnv.versionNum}",
+                                style: TextStyle(
+                                  color: themeProvider.hintText,
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 5.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextLogo(logoSize: 18),
-                          Text("version: ${DotEnv.versionNum}",
-                              style: TextStyle(
-                                color: Palette.hintText,
-                              ))
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             Flexible(
-              flex: 1,
-              child: Container(),
-            ),
-            Flexible(
               flex: 4,
-              child: ListView.builder(
-                  itemCount: _menus.length,
-                  itemBuilder: (context, index) {
-                    final menu = _menus[index];
-                    return CustomDrawerItem(
-                      svgPath: index == _selectedIndex
-                          ? menu['svgFill']
-                          : menu['svgOutline'],
-                      text: menu['label'],
-                      isActive: index == _selectedIndex ? true : false,
-                      onTap: () {
-                        ZoomDrawer.of(context)!.toggle();
-                        setState(() {
-                          //Reset to home screen and change screen index
-                          _initialText = "";
-                          _initialLang = "";
-                          _selectedIndex = index;
-                        });
-                      },
-                    );
-                  }),
+              // //Custom Menu with ListView
+              // child: ListView.builder(
+              //     itemCount: _menus.length,
+              //     itemBuilder: (context, index) {
+              //       final menu = _menus[index];
+              //       return CustomDrawerItem(
+              //         svgPath: index == _selectedIndex
+              //             ? menu['svgFill']
+              //             : menu['svgOutline'],
+              //         text: menu['label'],
+              //         isActive: index == _selectedIndex ? true : false,
+              //         onTap: () {
+              //           ZoomDrawer.of(context)!.toggle();
+              //           setState(() {
+              //             //Reset to home screen and change screen index
+              //             _initialText = "";
+              //             _initialLang = "";
+              //             _selectedIndex = index;
+              //           });
+              //         },
+              //       );
+              //     }),
+
+              //Custom Menu with Column
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ...menus.asMap().entries.map((e) => CustomDrawerItem(
+                        svgPath: e.key == _selectedIndex
+                            ? e.value['svgFill']
+                            : e.value['svgOutline'],
+                        text: e.value['label'],
+                        isActive: e.key == _selectedIndex ? true : false,
+                        onTap: () {
+                          _zoomDrawerController.close!();
+                          setState(() {
+                            _initialText = "";
+                            _initialLang = "";
+                            _selectedIndex = e.key;
+                          });
+                        },
+                      )),
+                ],
+              ),
             ),
             Flexible(
               flex: 1,
@@ -151,8 +176,8 @@ class _NavScreenState extends State<NavScreen> {
                 child: CustomButton(
                     svgPath: 'assets/svgs/feedback.svg',
                     svgSize: 40,
-                    color: Palette.text,
-                    text: 'Feedback',
+                    color: themeProvider.text,
+                    text: languageProvider.feedback,
                     padding: 5,
                     borderRadius: 20,
                     onTap: () {
@@ -181,17 +206,19 @@ class _NavScreenState extends State<NavScreen> {
       borderRadius: 15.0,
       angle: 0.0,
       dragOffset: 100,
-      shadowLayer1Color: Palette.scaffoldShadow,
-      shadowLayer2Color: Palette.scaffoldShadow,
+      shadowLayer1Color: themeProvider.scaffoldShadow,
+      shadowLayer2Color: themeProvider.scaffoldShadow,
       showShadow: true,
       boxShadow: const [
         BoxShadow(
             color: Colors.black54, offset: Offset(-.4, -.4), blurRadius: 3),
       ],
-      slideWidth: MediaQuery.of(context).size.width * .80,
+      slideWidth: Responsive.isDesktop(context)
+          ? MediaQuery.of(context).size.width * .20
+          : MediaQuery.of(context).size.width * .80,
       androidCloseOnBackTap: true,
       mainScreenTapClose: true,
-      menuBackgroundColor: Palette.scaffold,
+      menuBackgroundColor: themeProvider.scaffold,
     );
   }
 }

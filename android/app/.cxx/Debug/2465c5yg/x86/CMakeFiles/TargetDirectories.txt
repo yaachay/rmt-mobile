@@ -1,0 +1,2 @@
+D:/YAA-CHAY/flutter/rakhine_myanmar_translator/android/app/.cxx/Debug/2465c5yg/x86/CMakeFiles/edit_cache.dir
+D:/YAA-CHAY/flutter/rakhine_myanmar_translator/android/app/.cxx/Debug/2465c5yg/x86/CMakeFiles/rebuild_cache.dir

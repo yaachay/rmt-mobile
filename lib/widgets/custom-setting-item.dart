@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 import 'package:rakhine_myanmar_translator/widgets/widgets.dart';
 
@@ -13,7 +14,7 @@ class CustomSettingItem extends StatelessWidget {
   const CustomSettingItem({
     super.key,
     required this.iconPath,
-    this.iconSize = 30,
+    this.iconSize = 35,
     required this.title,
     required this.subtitle,
     required this.action,
@@ -21,6 +22,8 @@ class CustomSettingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
     return Container(
       height: 65,
       margin: const EdgeInsets.symmetric(
@@ -39,7 +42,7 @@ class CustomSettingItem extends StatelessWidget {
                   iconPath,
                   width: iconSize,
                   height: iconSize,
-                  color: Palette.text,
+                  color: themeProvider.text,
                 ),
               ),
               Expanded(
@@ -49,14 +52,14 @@ class CustomSettingItem extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(
-                        color: Palette.text,
+                      style: TextStyle(
+                        color: themeProvider.text,
                       ),
                     ),
                     Text(
                       subtitle,
-                      style: const TextStyle(
-                        color: Palette.hintText,
+                      style: TextStyle(
+                        color: themeProvider.hintText,
                         fontSize: 13,
                       ),
                     )

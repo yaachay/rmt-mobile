@@ -6,6 +6,7 @@ import 'package:animated_switcher_plus/animated_switcher_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:provider/provider.dart';
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 import 'package:rakhine_myanmar_translator/services/services.dart';
 import 'package:rakhine_myanmar_translator/widgets/widgets.dart';
@@ -30,15 +31,15 @@ class _HomeScreenState extends State<HomeScreen> {
       TextEditingController();
 
   bool _rk2MY = true;
+  bool _isPasteable = false;
 
-  double _textBoxHeight = 100.0; // Initial height
+  double _textBoxHeight = 100.0; // Initial Height
 
+  // Calculate the new height based on the number of lines
   void _adjustTextBoxHeight(String value) {
-    // Calculate the new height based on the number of lines
-    int lines = '\n'.allMatches(value).length + 1; // Number of lines
+    int lines = '\n'.allMatches(value).length + 1;
     setState(() {
-      _textBoxHeight =
-          (lines * 23.0).clamp(100.0, 700.0); // Adjust height with a limit
+      _textBoxHeight = (lines * 23.0).clamp(100.0, 700.0);
     });
   }
 
@@ -52,13 +53,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
       // Perform translation based on the language (rk or my)
       if (widget.lang == "rk") {
-        // Asynchronous translation
         _translateAndSetState(initialText, true, TranslatorService.rkToMY);
       } else if (widget.lang == "my") {
-        // Asynchronous translation
         _translateAndSetState(initialText, false, TranslatorService.myToRK);
       }
     }
+    checkClipboard();
+  }
+
+  void checkClipboard() async {
+    bool haveData = await ClipboardService.haveData();
+    setState(() {
+      _isPasteable = haveData;
+    });
   }
 
 // Helper function to perform translation and update UI state
@@ -66,7 +73,6 @@ class _HomeScreenState extends State<HomeScreen> {
       Future<String> Function(String) translationFunction) async {
     String translatedText = await translationFunction(initialText);
 
-    // Update UI state inside setState
     setState(() {
       _rk2MY = rk2MY;
       _firstTextBoxController.text = initialText;
@@ -76,8 +82,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
     return Scaffold(
-      backgroundColor: Palette.scaffold,
+      backgroundColor: themeProvider.scaffold,
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -87,12 +95,12 @@ class _HomeScreenState extends State<HomeScreen> {
             width: 30,
             height: 30,
             'assets/svgs/menu.svg',
-            color: Palette.text,
+            color: themeProvider.text,
           ),
         ),
         title: const TextLogo(),
         centerTitle: true,
-        backgroundColor: Palette.scaffold,
+        backgroundColor: themeProvider.scaffold,
         elevation: 0,
         surfaceTintColor: Colors.transparent,
       ),
@@ -121,17 +129,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: AnimatedSwitcherPlus.translationTop(
                             duration: const Duration(milliseconds: 500),
                             child: _rk2MY
-                                ? const Text(
-                                    'Rakhine',
+                                ? Text(
+                                    languageProvider.rkLang,
                                     style: TextStyle(
-                                        color: Palette.text, fontSize: 16),
-                                    key: ValueKey(0),
+                                        color: themeProvider.text,
+                                        fontSize: 16),
+                                    key: const ValueKey(0),
                                   )
-                                : const Text(
-                                    'Myanmar',
+                                : Text(
+                                    languageProvider.myLang,
                                     style: TextStyle(
-                                        color: Palette.text, fontSize: 16),
-                                    key: ValueKey(1),
+                                        color: themeProvider.text,
+                                        fontSize: 16),
+                                    key: const ValueKey(1),
                                   ),
                           ),
                         ),
@@ -139,17 +149,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: AnimatedSwitcherPlus.translationBottom(
                             duration: const Duration(milliseconds: 500),
                             child: _rk2MY
-                                ? const Text(
-                                    'Myanmar',
+                                ? Text(
+                                    languageProvider.myLang,
                                     style: TextStyle(
-                                        color: Palette.text, fontSize: 16),
-                                    key: ValueKey(0),
+                                        color: themeProvider.text,
+                                        fontSize: 16),
+                                    key: const ValueKey(0),
                                   )
-                                : const Text(
-                                    'Rakhine',
+                                : Text(
+                                    languageProvider.rkLang,
                                     style: TextStyle(
-                                        color: Palette.text, fontSize: 16),
-                                    key: ValueKey(1),
+                                        color: themeProvider.text,
+                                        fontSize: 16),
+                                    key: const ValueKey(1),
                                   ),
                           ),
                         ),
@@ -166,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                            gradient: Palette.primaryGradient,
+                            gradient: themeProvider.primaryGradient,
                             borderRadius: BorderRadius.circular(15)),
                         child: Center(
                           child: IconButton(
@@ -223,42 +235,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                     maxLines: null,
                                     decoration: InputDecoration.collapsed(
                                       hintText: _rk2MY
-                                          ? 'Type in Rakhine...'
-                                          : 'Type in Myanmar...',
-                                      hintStyle: const TextStyle(
-                                        color: Palette.hintText,
+                                          ? languageProvider.rkHint
+                                          : languageProvider.myHint,
+                                      hintStyle: TextStyle(
+                                        color: themeProvider.hintText,
                                         fontFamily: 'Inder',
                                       ),
                                     ),
-                                    style: const TextStyle(
-                                      color: Palette.text,
+                                    style: TextStyle(
+                                      color: themeProvider.text,
                                       fontFamily: 'Pyidaungsu',
                                     ),
-                                    // onChanged: (value) {
-                                    //   _adjustTextBoxHeight(value);
-                                    //   setState(
-                                    //     () async {
-                                    //       String text = _rk2MY
-                                    //           ? await TranslatorService.rkToMY(
-                                    //               value)
-                                    //           : await TranslatorService.myToRK(
-                                    //               value);
-                                    //       _secondTextBoxController.text = text;
-                                    //     },
-                                    //   );
-                                    // },
                                     onChanged: (value) async {
-                                      _adjustTextBoxHeight(
-                                          value); // Keep this outside setState
+                                      _adjustTextBoxHeight(value);
 
-                                      // Perform the async translation
                                       String text = _rk2MY
                                           ? await TranslatorService.rkToMY(
                                               value)
                                           : await TranslatorService.myToRK(
                                               value);
 
-                                      // Update the UI inside setState (sync operation)
                                       setState(() {
                                         _secondTextBoxController.text = text;
                                       });
@@ -274,7 +270,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 height: 40,
                                 child: (_firstTextBoxController.text.isEmpty)
-                                    ? const SizedBox.shrink()
+                                    ? (_isPasteable)
+                                        ? Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              CustomTbButton(
+                                                svgPath:
+                                                    'assets/svgs/paste.svg',
+                                                tooltip: languageProvider.paste,
+                                                onTap: () async {
+                                                  String text =
+                                                      await ClipboardService
+                                                              .paste() ??
+                                                          '';
+
+                                                  String translateText = _rk2MY
+                                                      ? await TranslatorService
+                                                          .rkToMY(text)
+                                                      : await TranslatorService
+                                                          .myToRK(text);
+
+                                                  setState(() {
+                                                    _firstTextBoxController
+                                                        .text = text;
+                                                    _secondTextBoxController
+                                                        .text = translateText;
+                                                  });
+                                                },
+                                              ),
+                                            ],
+                                          )
+                                        : const SizedBox.shrink()
                                     : Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
@@ -284,15 +312,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                           CustomTbButton(
                                             svgPath: 'assets/svgs/speaker.svg',
                                             svgSize: 23,
-                                            tooltip: 'Speak',
+                                            tooltip: languageProvider.speak,
                                             onTap: () {},
                                           ),
                                           CustomTbButton(
                                             svgPath: _rk2MY
                                                 ? 'assets/svgs/copy-r.svg'
                                                 : 'assets/svgs/copy-m.svg',
-                                            tooltip: 'Copy',
-                                            onTap: () {},
+                                            tooltip: languageProvider.copy,
+                                            onTap: () {
+                                              ClipboardService.copy(
+                                                  _firstTextBoxController.text);
+                                            },
                                           ),
                                           const Expanded(
                                             child: SizedBox.shrink(),
@@ -300,65 +331,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                           CustomTbButton(
                                             svgPath: 'assets/svgs/cancel.svg',
                                             svgSize: 27,
-                                            tooltip: 'Clear',
+                                            tooltip: languageProvider.clear,
                                             onTap: () {
                                               _firstTextBoxController.text = '';
                                               _secondTextBoxController.text =
                                                   '';
                                               _adjustTextBoxHeight(
                                                   _firstTextBoxController.text);
+                                              checkClipboard();
                                             },
                                           ),
-                                          // Expanded(
-                                          //   child: Container(
-                                          //     padding: const EdgeInsets.only(
-                                          //         left: 10),
-                                          //     decoration: BoxDecoration(
-                                          //       color: Palette.hintText
-                                          //           .withOpacity(0.1),
-                                          //       borderRadius:
-                                          //           BorderRadius.circular(20),
-                                          //     ),
-                                          //     child: Row(
-                                          //       mainAxisSize: MainAxisSize.min,
-                                          //       mainAxisAlignment:
-                                          //           MainAxisAlignment
-                                          //               .spaceBetween,
-                                          //       children: [
-                                          //         const Expanded(
-                                          //           child: Text(
-                                          //             'Generate with AI',
-                                          //             style: TextStyle(
-                                          //               color: Palette.hintText,
-                                          //               fontWeight:
-                                          //                   FontWeight.bold,
-                                          //             ),
-                                          //           ),
-                                          //         ),
-                                          //         Container(
-                                          //           width: 50,
-                                          //           height: 35,
-                                          //           decoration: BoxDecoration(
-                                          //             gradient: Palette
-                                          //                 .primaryGradient,
-                                          //             borderRadius:
-                                          //                 BorderRadius.circular(
-                                          //                     20),
-                                          //           ),
-                                          //           child: IconButton(
-                                          //             icon: SvgPicture.asset(
-                                          //               'assets/svgs/send.svg',
-                                          //               width: 45,
-                                          //               height: 45,
-                                          //               color: Colors.white,
-                                          //             ),
-                                          //             onPressed: () {},
-                                          //           ),
-                                          //         ),
-                                          //       ],
-                                          //     ),
-                                          //   ),
-                                          // ),
                                         ],
                                       ),
                               )
@@ -375,10 +357,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 width: double.infinity,
                                 height: 20,
                               ),
-                              const Text(
-                                'Recent history',
+                              Text(
+                                languageProvider.recentHistory,
                                 style: TextStyle(
-                                  color: Palette.hintText,
+                                  color: themeProvider.hintText,
                                 ),
                               ),
                               ...DotEnv.recent_history.asMap().entries.map((e) {
@@ -387,10 +369,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   text: e.value['text'],
                                   lang: e.value['lang'],
                                   onDismissed: (direction) {
-                                    debugPrint(direction.toString());
+                                    setState(() {
+                                      DotEnv.recent_history.removeAt(e.key);
+                                    });
                                   },
                                   onTap: () async {
-                                    // Perform asynchronous translation first
                                     _rk2MY = (e.value["lang"] == "rk")
                                         ? true
                                         : false;
@@ -403,7 +386,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         : await TranslatorService.myToRK(
                                             e.value['text']);
 
-                                    // Now call setState to update the UI with the translated text
                                     setState(() {
                                       _secondTextBoxController.text =
                                           translatedText;
@@ -417,7 +399,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             offset: 2,
                             blurRadius: 10,
                             borderRadius: BorderRadius.circular(10),
-                            gradient: Palette.primaryGradient,
+                            gradient: themeProvider.primaryGradient,
                             child: SizedBox(
                               width: double.infinity,
                               height: _textBoxHeight + 70,
@@ -465,7 +447,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           svgPath: 'assets/svgs/speaker.svg',
                                           svgSize: 23,
                                           svgColor: Colors.white,
-                                          tooltip: 'Speak',
+                                          tooltip: languageProvider.speak,
                                           onTap: () {},
                                         ),
                                         CustomTbButton(
@@ -473,14 +455,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ? 'assets/svgs/copy-m.svg'
                                               : 'assets/svgs/copy-r.svg',
                                           svgColor: Colors.white,
-                                          tooltip: 'Copy',
-                                          onTap: () {},
+                                          tooltip: languageProvider.copy,
+                                          onTap: () {
+                                            ClipboardService.copy(
+                                                _secondTextBoxController.text);
+                                          },
                                         ),
                                         CustomTbButton(
                                           svgPath: 'assets/svgs/copy-all.svg',
                                           svgColor: Colors.white,
-                                          tooltip: 'Copy All',
-                                          onTap: () {},
+                                          tooltip: languageProvider.copyAll,
+                                          onTap: () {
+                                            String text = _rk2MY
+                                                ? "<ရခိုင်ဘာသာ>\n ${_firstTextBoxController.text}\n\n<မြန်မာဘာသာ>\n${_secondTextBoxController.text}"
+                                                : "<မြန်မာဘာသာ>\n${_firstTextBoxController.text}\n\n<ရခိုင်ဘာသာ>\n${_secondTextBoxController.text}";
+                                            ClipboardService.copy(text);
+                                          },
                                         ),
                                         Expanded(
                                           child: Row(
@@ -491,7 +481,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 svgPath:
                                                     'assets/svgs/heart-outline.svg',
                                                 svgColor: Colors.white,
-                                                tooltip: 'Favourite',
+                                                tooltip:
+                                                    languageProvider.favourite,
                                                 onTap: () {},
                                               ),
                                             ],

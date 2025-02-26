@@ -1,5 +1,6 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:rakhine_myanmar_translator/configs/configs.dart';
 
@@ -18,11 +19,13 @@ class IconLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
     return AvatarGlow(
       startDelay: const Duration(milliseconds: 1000),
       // duration: const Duration(seconds: 30),
       glowCount: 5,
-      glowColor: Palette.primary,
+      glowColor: themeProvider.primary,
       glowShape: BoxShape.circle,
       glowRadiusFactor: glowRadiusFactor!,
       animate: true,
