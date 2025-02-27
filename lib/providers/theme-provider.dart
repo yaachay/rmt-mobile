@@ -101,8 +101,8 @@ class ThemeProvider extends ChangeNotifier {
       _shimmerHighlight = const Color(0xFF5A5A5A);
     } else if (theme == Themes.darkTheme) {
       _primary = const Color(0xFF308AF4);
-      _scaffold = const Color(0xFF383838);
-      _scaffoldSecondary = const Color(0xFF1E1E1E);
+      _scaffold = const Color(0xFF1E1E1E);
+      _scaffoldSecondary = const Color(0xFF333333);
       _scaffoldShadow = const Color(0x10FFFFFF);
 
       _appBarGradient = const LinearGradient(
@@ -125,11 +125,11 @@ class ThemeProvider extends ChangeNotifier {
       _black25 = const Color(0x50000000);
       _black = const Color(0xFF000000);
 
-      _topBoxShadow = const Color(0x50FFFFFF);
-      _bottomBoxShadow = const Color(0xFF1A1A1A);
+      _topBoxShadow = const Color(0x25FFFFFF);
+      _bottomBoxShadow = const Color(0xFF000000);
 
       _shimmerBase = const Color(0xFFFFFFFF);
-      _shimmerHighlight = const Color(0xFF383838);
+      _shimmerHighlight = const Color(0xFFDFDFDF);
     } else {
       bool isLightMode =
           PlatformDispatcher.instance.platformBrightness == Brightness.light;

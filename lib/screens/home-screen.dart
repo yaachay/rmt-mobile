@@ -11,6 +11,7 @@ import 'package:rakhine_myanmar_translator/configs/configs.dart';
 import 'package:rakhine_myanmar_translator/providers/providers.dart';
 import 'package:rakhine_myanmar_translator/services/services.dart';
 import 'package:rakhine_myanmar_translator/widgets/widgets.dart';
+import 'package:rakhine_myanmar_translator/models/models.dart';
 
 class HomeScreen extends StatefulWidget {
   final String? text;
@@ -310,12 +311,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          CustomTbButton(
-                                            svgPath: 'assets/svgs/speaker.svg',
-                                            svgSize: 23,
-                                            tooltip: languageProvider.speak,
-                                            onTap: () {},
-                                          ),
+                                          // CustomTbButton(
+                                          //   svgPath: 'assets/svgs/speaker.svg',
+                                          //   svgSize: 23,
+                                          //   tooltip: languageProvider.speak,
+                                          //   onTap: () {},
+                                          // ),
                                           CustomTbButton(
                                             svgPath: _rk2MY
                                                 ? 'assets/svgs/copy-r.svg'
@@ -444,13 +445,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        CustomTbButton(
-                                          svgPath: 'assets/svgs/speaker.svg',
-                                          svgSize: 23,
-                                          svgColor: Colors.white,
-                                          tooltip: languageProvider.speak,
-                                          onTap: () {},
-                                        ),
+                                        // CustomTbButton(
+                                        //   svgPath: 'assets/svgs/speaker.svg',
+                                        //   svgSize: 23,
+                                        //   svgColor: Colors.white,
+                                        //   tooltip: languageProvider.speak,
+                                        //   onTap: () {},
+                                        // ),
                                         CustomTbButton(
                                           svgPath: _rk2MY
                                               ? 'assets/svgs/copy-m.svg'
@@ -484,7 +485,32 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 svgColor: Colors.white,
                                                 tooltip:
                                                     languageProvider.favourite,
-                                                onTap: () {},
+                                                onTap: () async {
+                                                  Record record = Record(
+                                                    originalText:
+                                                        _firstTextBoxController
+                                                            .text,
+                                                    translatedText:
+                                                        _secondTextBoxController
+                                                            .text,
+                                                    fromLang:
+                                                        _rk2MY ? 'rk' : 'my',
+                                                    toLang:
+                                                        _rk2MY ? "my" : 'rk',
+                                                  );
+                                                  final DatabaseHelper
+                                                      dbHelper =
+                                                      DatabaseHelper.instance;
+                                                  int result = await dbHelper
+                                                      .insertRecord(record);
+                                                  if (result != -1) {
+                                                    print(
+                                                        "Record inserted successfully");
+                                                  } else {
+                                                    print(
+                                                        "Failed to insert record");
+                                                  }
+                                                },
                                               ),
                                             ],
                                           ),
